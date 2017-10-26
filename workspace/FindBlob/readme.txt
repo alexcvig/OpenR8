@@ -1,0 +1,2 @@
+Example:
+ImageOpen ImageDebug ImageBinarize ImageDebug ImageFindBlob JsonPrint ImageDebug ImageSave
