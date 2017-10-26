@@ -1,8 +1,9 @@
 # OpenR8    
 A.I. Software for Everyone    
     
+Windows 64bit.
     
-The stable release is available in the following URL.   
+Please download the stable release in the following URL.   
 http://www.openrobot.club/article/index?sn=10935
 
 
