@@ -3,9 +3,8 @@ A.I. Software for Everyone
     
 Windows 64bit.
     
-Please download the stable release in the following URL.   
-http://www.openrobot.club/article/index?sn=10935
+Please download the stable release in the following URL. http://www.openrobot.club/article/index?sn=10935       
 
-Contact Email: openrobot@openrobot.club
+Contact Email: openrobot@openrobot.club     
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
