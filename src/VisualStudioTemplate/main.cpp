@@ -3,7 +3,7 @@
 
 
 
-//Export from D:\GitHub\R8_release_x64\workspace\FindBlob\FindBlob.r6
+//Export from D:\wx_test.r6
 int main(void) {
 
     SetConsoleOutputCP(65001);
@@ -22,49 +22,35 @@ int main(void) {
 
     // Variables
 
-    R7_AddVariable(r7h, u8"flie_name", "string", u8"sample.png");
+    R7_AddVariable(r7h, u8"Enable", "bool", u8"1");
 
-    R7_AddVariable(r7h, u8"SampleImage", "image", u8"");
+    R7_AddVariable(r7h, u8"Image_テスト_utf8測試", "image", u8"");
 
-    R7_AddVariable(r7h, u8"gray_value", "int", u8"110");
+    R7_AddVariable(r7h, u8"ImageBinarize", "image", u8"");
 
-    R7_AddVariable(r7h, u8"Binarize_Image", "image", u8"");
+    R7_AddVariable(r7h, u8"ImageFileName", "string", u8"テスト.png");
 
-    R7_AddVariable(r7h, u8"Output_File_Name", "string", u8"output.png");
+    R7_AddVariable(r7h, u8"IsHide", "bool", u8"1");
 
-    R7_AddVariable(r7h, u8"True", "bool", u8"1");
-
-    R7_AddVariable(r7h, u8"MinArea", "int", u8"1000");
-
-    R7_AddVariable(r7h, u8"Output_Json", "json", u8"");
-
-    R7_AddVariable(r7h, u8"Output_Image", "image", u8"");
-
-    R7_AddVariable(r7h, u8"Type", "string", u8"Defect");
+    R7_AddVariable(r7h, u8"Threshold", "int", u8"100");
 
 
     // Functions
 
-    R7_AddFunction(r7h, u8"Image_Open", u8"flie_name", u8"SampleImage");
+    R7_AddFunction(r7h, u8"R7_EnableWxWidgets");
 
-    R7_AddFunction(r7h, u8"Debug_Image", u8"SampleImage");
+    R7_AddFunction(r7h, u8"Image_Open", u8"ImageFileName", u8"Image_テスト_utf8測試");
 
-    R7_AddFunction(r7h, u8"Image_Binarize", u8"SampleImage", u8"gray_value", u8"Binarize_Image");
+    R7_AddFunction(r7h, u8"Debug_Image", u8"Image_テスト_utf8測試");
 
-    R7_AddFunction(r7h, u8"Debug_Image", u8"Binarize_Image");
+    R7_AddFunction(r7h, u8"Image_Binarize", u8"Image_テスト_utf8測試", u8"Threshold", u8"ImageBinarize");
 
-    R7_AddFunction(r7h, u8"Image_FindBlob", u8"Binarize_Image", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, u8"True", u8"MinArea", NULL, NULL, NULL, NULL, NULL, NULL, u8"Output_Json", u8"SampleImage", u8"Output_Image", u8"Type");
-
-    R7_AddFunction(r7h, u8"Json_Print", u8"Output_Json");
-
-    R7_AddFunction(r7h, u8"Debug_Image", u8"Output_Image");
-
-    R7_AddFunction(r7h, u8"Image_Save", u8"Output_Image", u8"Output_File_Name");
+    R7_AddFunction(r7h, u8"Debug_Image", u8"ImageBinarize");
 
 
     // Run
 
-    R7_Run(r7h, u8"D:\\GitHub\\R8_release_x64\\workspace\\FindBlob\\", 1);
+    R7_Run(r7h, u8"D:\\", 1);
 
     R7_Release(r7h);
 

@@ -18,7 +18,7 @@ R7 dll library uses UTF-8 encoding inside.
 #include <opencv2\opencv.hpp>
 
 
-#define R7_VERSION "3.12.0-rc2"
+#define R7_VERSION "3.13.0-rc1"
 
 #define R7_STRING_SIZE 4096
 #define R7_TYPE_NAME_SIZE 4096
@@ -44,11 +44,6 @@ R7 dll library uses UTF-8 encoding inside.
 
 
 R7_API std::vector<int> R7_GetFunctionSnSort(int r7Sn);
-
-R7_API int R7_AddFunctionVariable(int r7Sn, int functionSn, int variableSn);
-
-R7_API int R7_AddVariable(int r7Sn, char *name, char *type, char *value);
-R7_API int R7_AddFunction(int r7Sn, char *name, ...);
 
 #ifdef __cplusplus
 extern "C"
@@ -118,6 +113,9 @@ extern "C"
 	R7_API int R7_GetSupportList(char *str, int strSize);
 
 	R7_API int R7_Log(int level, char *functionName, char *format, ...);
+
+	R7_API int R7_AddVariable(int r7Sn, char *name, char *type, char *value);
+	R7_API int R7_AddFunction(int r7Sn, char *name, ...);
 
 #ifdef __cplusplus
 }
