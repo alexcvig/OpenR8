@@ -21,7 +21,7 @@
 </function>
 <function>
 <sn>2</sn>
-<name>Print</name>
+<name>Println</name>
 <posY>2</posY>
 <enable>1</enable>
 <remark>Float=</remark>
@@ -34,7 +34,7 @@
 </function>
 <function>
 <sn>3</sn>
-<name>Print</name>
+<name>Println</name>
 <posY>3</posY>
 <enable>1</enable>
 <remark>Float=</remark>

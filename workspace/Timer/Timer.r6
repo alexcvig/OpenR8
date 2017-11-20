@@ -74,7 +74,7 @@
 </function>
 <function>
 <sn>18</sn>
-<name>Print</name>
+<name>Println</name>
 <posY>6</posY>
 <enable>1</enable>
 <remark></remark>
@@ -103,7 +103,7 @@
 </function>
 <function>
 <sn>22</sn>
-<name>Print</name>
+<name>Println</name>
 <posY>12</posY>
 <enable>1</enable>
 <remark></remark>
