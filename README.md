@@ -5,9 +5,9 @@ Free IDE software for A.I. algorithms.
 
 Implement A.I. algorithms without coding.
     
-Windows 64bit.
+Windows 64bit Edition.
     
-Please download the stable release in the following URL. http://www.openrobot.club/article/index?sn=10935       
+Please download the official release in the following URL. http://www.openrobot.club/article/index?sn=10935       
 
 Contact: openrobot@openrobot.club     
 
