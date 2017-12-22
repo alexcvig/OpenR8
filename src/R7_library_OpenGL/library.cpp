@@ -118,7 +118,11 @@ static int OpenGL_NewWindow(int r7Sn, int functionSn) {
 
 	// Initial values of OpenGL_t.
 	openglPtr->testFrame = new TestFrame(wxT("Test 7"), wxPoint(0, 0), wxSize(400, 400));
+	if (openglPtr->testFrame == NULL) {
 	
+		printf("openglPtr->testFrame == NULL! \n");
+	}
+	printf("OpenGL_NewWindow: %s \n", (const char*)(openglPtr->testFrame->GetTitle().ToUTF8()));
 	printf("OpenGL_NewWindow TestFrame Show ++\n");
 	openglPtr->testFrame->Show();
 	printf("OpenGL_NewWindow TestFrame Show --\n");
