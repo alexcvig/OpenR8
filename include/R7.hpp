@@ -1,8 +1,4 @@
 ﻿/*
-Copyright (c) Open Robot Club. All rights reserved.
-*/
-
-/*
 Export functions to 3rdparty.
 R7 dll library uses UTF-8 encoding inside.
 */
@@ -18,7 +14,12 @@ R7 dll library uses UTF-8 encoding inside.
 #include <opencv2\opencv.hpp>
 
 
-#define R7_VERSION "3.16.0-rc1"
+
+#include "wx/wx.h"
+#include "wx/glcanvas.h"
+#include "wx/wxprec.h"
+
+#define R7_VERSION "3.17.0-rc1"
 
 #define R7_STRING_SIZE 4096
 #define R7_TYPE_NAME_SIZE 4096
@@ -44,6 +45,23 @@ R7 dll library uses UTF-8 encoding inside.
 
 
 R7_API std::vector<int> R7_GetFunctionSnSort(int r7Sn);
+
+class MyApp : public wxApp
+{
+public:
+	MyApp() {
+	}
+	virtual int OnRun() wxOVERRIDE;
+private:
+};
+
+class TemplateFrame : public wxFrame
+{
+public:
+	TemplateFrame(const wxString& title, const wxPoint& pos, const wxSize& size) : wxFrame(NULL, wxID_ANY, title, pos, size) {};
+	//TemplateFrame(const wxString title, const wxPoint pos, const wxSize size);
+	//TemplateFrame();
+};
 
 #ifdef __cplusplus
 extern "C"
@@ -116,6 +134,12 @@ extern "C"
 
 	R7_API int R7_AddVariable(int r7Sn, char *name, char *type, char *value);
 	R7_API int R7_AddFunction(int r7Sn, char *name, ...);
+
+	R7_API int R7_ShowWxWindow(wxFrame *wxWin);
+	R7_API int R7_ShowWxWindow2(wxFrame &wxWin);
+
+	//R7_API int R7_NewWxFrame(wxFrame *frame, const wxString& title, const wxPoint& pos, const wxSize& size);
+	R7_API wxFrame* R7_NewWxFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
 
 #ifdef __cplusplus
 }
