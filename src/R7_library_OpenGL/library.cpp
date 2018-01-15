@@ -9,9 +9,20 @@ OpenGL library for R7.
 //#include <wx/sizer.h>
 //#include <wx/glcanvas.h>
 //#include <wx/msw/glcanvas.h>
-#include "wx/glcanvas.h"
-#include "wx/wxprec.h"
-#include "wx/wx.h"
+//#include "wx/glcanvas.h"
+//#include "wx/wxprec.h"
+//#include "wx/wx.h"
+
+
+#include <wx/wxprec.h>
+
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
+
+#include <wx/string.h>
+#include <wx/event.h>
+
 //#include <GL/glut.h>
 #include <GL/gl.h>
 
