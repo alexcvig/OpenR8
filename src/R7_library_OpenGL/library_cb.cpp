@@ -41,6 +41,22 @@ double scale[] = {0.05, 0.1, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0};
 static int scale_index = 4;		//--- scale = 1.0
 
 
+// the rendering context used by all GL canvases
+class TestGLContext : public wxGLContext
+{
+public:
+	TestGLContext(wxGLCanvas *canvas);
+	
+	// double scale = 0.5;
+
+	// render the cube showing it at given angles
+	//void DrawImage(double x, double y, int win_width, int win_height);
+	void DrawImage(Mat &mat, int windowW, int windowH, int x, int y, double scale);
+
+private:
+	// textures for the cube faces
+	GLuint m_textures[6];
+};
 
 /*
 class TestGLCanvas : public wxGLCanvas
@@ -1516,17 +1532,14 @@ void TestGLContext::DrawImage(Mat &mat, int windowW, int windowH, int x, int y, 
 
 //wxIMPLEMENT_APP(MyApp);
 
-//IMPLEMENT_APP_NO_MAIN(MyApp);
-//IMPLEMENT_WX_THEME_SUPPORT;
+IMPLEMENT_APP_NO_MAIN(MyApp);
+IMPLEMENT_WX_THEME_SUPPORT;
 
 bool MyApp::OnInit()
 {
 	printf("MyApp::OnInit \n");
 	if (!wxApp::OnInit())
-	{
-		printf("!wxApp::OnInit() \n");
 		return false;
-	}
 
 	/*
 	if (isMyFrame)
@@ -1547,7 +1560,6 @@ bool MyApp::OnInit()
 
 int MyApp::OnRun()
 {
-	printf("MyApp::OnRun \n");
     //R7_Log(R7_INFO, “MyApp::OnRun”, “OnRun ++“);
     //當[沒有任何圖片需要顯示]時，不進入 OnRun
     if (isWxWidgetsShowAnyImage) {		//--- ShowWindow
@@ -1647,20 +1659,6 @@ TestGLCanvas::TestGLCanvas(wxWindow *parent, int *attribList, MyFrame *frame)
 	}
 }
 
-
-TestGLContext& TestGLCanvas::GetContext(wxGLCanvas *canvas)
-{
-	//printf("OpenGLContext& OpenGLCanvas::GetContext \n");
-	TestGLContext *glContext;
-	if (!m_glContext)
-	{
-		m_glContext = new TestGLContext(canvas);
-	}
-	glContext = m_glContext;
-	glContext->SetCurrent(*canvas);
-	return *glContext;
-}
-
 void TestGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
 	printf("TestGLCanvas::OnPaint \n");
@@ -1681,7 +1679,7 @@ void TestGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 	printf("OnPaint: ClientSize.y = %d\n", ClientSize.y);
 
 	
-	TestGLContext& canvas = GetContext(this);
+	TestGLContext& canvas = wxGetApp().GetContext(this, m_useStereo);
 	//glViewport(0, 0, ClientSize.x, ClientSize.y);
 	//glViewport(0, ClientSize.y - outputImage.size().height, outputImage.size().width, outputImage.size().height);
 	
@@ -2146,8 +2144,8 @@ MyFrame::MyFrame(bool stereoWindow)
 	// Important! otherwise, save img will be wrong
 	SetClientSize(img_panel->myImage.cols, img_panel->myImage.rows);
 	
-	printf("MyFrame:: Pre Show \n");
-	//Show();
+	
+	Show();
 
 	
 	//Raise();
@@ -2591,92 +2589,129 @@ typedef struct {
 } OpenGL_t;
 
 typedef struct {
-	int r7Sn = 0;
-	int functionSn = 0;
+	int r7Sn;
+	int functionSn;
 } CallBack_t;
 
 static int r7_OpenGL_NewWindow(void *data) {
-
-	printf("r7_OpenGL_NewWindow \n");
+	
+	//R7_GetVariableBool(r7Sn, functionSn, 1, &isEnable); //20171101 改為只能開不能關。
+	
+	//如果 WxWidgetsEnable 為 true 且 WxWidgets還沒 init ，則在這邊 init
 
 	int r7Sn, functionSn;
-	int res;
-	void *variableObject = NULL;
-	CallBack_t *cbPtr = ((CallBack_t *)data);
+
+	CallBack_t *cbPtr = (CallBack_t *)data;
 
 	r7Sn = cbPtr->r7Sn;
 	functionSn = cbPtr->functionSn;
 
-	printf("Line: %d, r7sn = %d \n", __LINE__, r7Sn);
-	printf("Line: %d, functionSn = %d \n", __LINE__, functionSn);
-	printf("Line: %d\n", __LINE__);
-
+	if (false) {
+		int wxArgc = 0;
+		char **wxArgv = NULL;
+		wxEntryStart(wxArgc, wxArgv);
+		wxTheApp->CallOnInit();
+		isWxWidgetsInit = true;
+	}
 	
-
+	int res;
+	void *variableObject = NULL;
+	res = R7_InitVariableObject(r7Sn, functionSn, 1, sizeof(OpenGL_t));
+	if (res <= 0) {
+		R7_Printf(r7Sn, "ERROR! R7_InitVariableObject = %d", res);
+		return -1;
+	}
 	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
 	if (res <= 0) {
 		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
 		return -2;
 	}
-
-	printf("Line: %d\n", __LINE__);
-
 	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
-
-	printf("Line: %d\n", __LINE__);
-
+	
+	// Initial values of OpenGL_t.
 	openglPtr->image = Mat();
-
-	printf("Line: %d\n", __LINE__);
-
 	openglPtr->screenShot = Mat();
-
-	printf("Line: %d\n", __LINE__);
-
 	openglPtr->status = 0;
-	printf("Line: %d\n", __LINE__);
-
+	//openglPtr->videoCapture = new VideoCapture();
+	//openglPtr->deviceNum = 0;
+	//openglPtr->apiID = CAP_ANY;
+	//openglPtr->capturedImage = Mat();
+	
 	isMyOpenglFrame = true;
-
+	
 	openglPtr->my_opengl_frame = new MyFrame();
-	printf("Line: %d\n", __LINE__);
+	openglPtr->my_opengl_frame->image_screenshot = Mat();
+	
+	/*
+	//--- wxWidgets
+	int testArgc = 0;
+	char ** testArgv = NULL;
+	wxEntryStart(testArgc, testArgv);
+	printf("wxTheApp->CallOnInit();\n");
+	wxTheApp->CallOnInit();
+	printf("wxTheApp->OnRun();\n");
+	wxTheApp->OnRun();
+	printf("wxTheApp->OnExit();\n");
+	wxTheApp->OnExit();
+	printf("wxTheApp->wxEntryCleanup();\n");
+	wxEntryCleanup();
+	*/
+	
+	return 1;
+}
 
-	printf("Line: %d\n", __LINE__);
-	openglPtr->my_opengl_frame->Show();
+static int OpenGL_NewWindow(int r7Sn, int functionSn) {
 
-	printf("Line: %d\n", __LINE__);
+	CallBack_t *cbPtr;
+
+	cbPtr->r7Sn = r7Sn;
+
+	cbPtr->functionSn = functionSn;
+
+	R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_NewWindow((void *)cbPtr));
+
 	return 1;
 }
 
 static int r7_OpenGL_ShowWindow(void *data) {
 	
-	printf("r7_OpenGL_ShowWindow \n");
+	printf("OpenGL_ShowWindow \n");
 	
 	int r7Sn, functionSn;
-	int res;
-	void *variableObject = NULL;
-	CallBack_t *cbPtr = ((CallBack_t *)data);
+
+	CallBack_t *cbPtr = (CallBack_t *)data;
 
 	r7Sn = cbPtr->r7Sn;
 	functionSn = cbPtr->functionSn;
 
-	printf("Line: %d, r7sn = %d \n", __LINE__, r7Sn);
-	printf("Line: %d, functionSn = %d \n", __LINE__, functionSn);
-	printf("Line: %d\n", __LINE__);
-
-
-
+	
+	int res;
+	void *variableObject = NULL;
+	
 	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
 	if (res <= 0) {
 		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
 		return -2;
 	}
+	
+	printf("Line: %d\n", __LINE__);
+	
 	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
-
+	
+	printf("Line: %d\n", __LINE__);
+	
+	printf("openglPtr->status = %d\n", openglPtr->status);
+	
 	if (openglPtr->status == 0)
 	{
 		printf("Line: %d\n", __LINE__);
+		
+		isWxWidgetsShowAnyImage = true;
+	
 		openglPtr->my_opengl_frame->Show(true);
+		
+		//openglPtr->my_opengl_frame->Show(false);
+		
 		openglPtr->status = 1;
 	}
 	else
@@ -2685,67 +2720,41 @@ static int r7_OpenGL_ShowWindow(void *data) {
 		return 3;
 	}
 	
-	return 1;
-}
-
-static int OpenGL_NewWindow(int r7Sn, int functionSn) {
-
-	printf("OpenGL_NewWindow \n");
-
-	//CallBack_t cb = { r7Sn = 0, functionSn = 0};
-	CallBack_t *cbPtr = (CallBack_t*)malloc(sizeof(CallBack_t));
-
-	cbPtr->r7Sn = r7Sn;
-
-	cbPtr->functionSn = functionSn;
+	//wxTheApp->OnRun();
 	
+	/*
+	//--- wxWidgets
+	int testArgc = 0;
+	char ** testArgv = NULL;
+	wxEntryStart(testArgc, testArgv);
 
+	wxTheApp->CallOnInit();
 
-	int res;
-	void *variableObject = NULL;
-	res = R7_InitVariableObject(r7Sn, functionSn, 1, sizeof(OpenGL_t));
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_InitVariableObject = %d", res);
-		return -1;
-	}
+	wxTheApp->OnRun();
 
+	wxTheApp->OnExit();
 
-	R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_NewWindow, (void*)cbPtr);
-
-	printf("Line: %d\n", __LINE__);
-	//system("PAUSE");
-	//R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_ShowWindow((void *)cbPtr));
-
-	//printf("Line: %d\n", __LINE__);
-
+	wxEntryCleanup();
+	*/
 	return 1;
 }
 
 static int OpenGL_ShowWindow(int r7Sn, int functionSn) {
 
-	printf("OpenGL_ShowWindow \n");
-
-	CallBack_t *cbPtr = (CallBack_t*)malloc(sizeof(CallBack_t));
+	CallBack_t *cbPtr;
 
 	cbPtr->r7Sn = r7Sn;
 
 	cbPtr->functionSn = functionSn;
 
-	R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_ShowWindow, (void*)cbPtr);
+	R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_ShowWindow((void *)cbPtr));
 
 	return 1;
 }
 
-static int r7_OpenGL_HideWindow(void *data) {
+static int r7_OpenGL_HideWindow(int r7Sn, int functionSn) {
 	
 	printf("OpenGL_HideWindow \n");
-
-	int r7Sn, functionSn;
-
-	CallBack_t *cbPtr = (CallBack_t *)data;
-
-	r7Sn = cbPtr->r7Sn;
-	functionSn = cbPtr->functionSn;
 
 	int res;
 	void *variableObject = NULL;
@@ -2794,63 +2803,13 @@ static int r7_OpenGL_HideWindow(void *data) {
 
 static int OpenGL_HideWindow(int r7Sn, int functionSn) {
 	
-	CallBack_t *cbPtr = (CallBack_t*)malloc(sizeof(CallBack_t));
+	CallBack_t *cbPtr;
 
 	cbPtr->r7Sn = r7Sn;
 
 	cbPtr->functionSn = functionSn;
 
-	R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_HideWindow, (void *)cbPtr);
-
-	return 1;
-}
-
-
-
-static int r7_OpenGL_ShowImage(void *data) {
-
-
-	int r7Sn, functionSn;
-	int res;
-	void *variableObject = NULL;
-	Mat getImage;
-
-	CallBack_t *cbPtr = ((CallBack_t *)data);
-
-	r7Sn = cbPtr->r7Sn;
-	functionSn = cbPtr->functionSn;
-
-
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
-	}
-	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
-
-	res = R7_GetVariableMat(r7Sn, functionSn, 2, &getImage);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! OpenGL_ShowImage get image = %d", res);
-		return -2;
-	}
-
-	if (openglPtr->status == 1)
-	{
-		openglPtr->my_opengl_frame->img_panel->myImage = getImage.clone();
-
-		openglPtr->my_opengl_frame->SetScrollbarFit();
-
-		openglPtr->my_opengl_frame->SetClientSize(openglPtr->my_opengl_frame->img_panel->myImage.cols, openglPtr->my_opengl_frame->img_panel->myImage.rows);
-
-		openglPtr->my_opengl_frame->img_panel->Refresh();
-
-		openglPtr->status = 2;
-	}
-	else
-	{
-		printf("Status error! \n");
-		return 3;
-	}
+	R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_HideWindow((void *)cbPtr));
 
 	return 1;
 }
@@ -2859,13 +2818,40 @@ static int OpenGL_ShowImage(int r7Sn, int functionSn) {
 	
 	printf("OpenGL_ShowImage \n");
 	
-	CallBack_t *cbPtr = (CallBack_t*)malloc(sizeof(CallBack_t));
-
-	cbPtr->r7Sn = r7Sn;
-
-	cbPtr->functionSn = functionSn;
-
-	R7_QueueWxEvent((R7CallbackHandler)r7_OpenGL_ShowImage, (void *)cbPtr);
+	int res;
+	void *variableObject = NULL;
+	Mat getImage;
+	
+	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
+	if (res <= 0) {
+		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
+		return -2;
+	}
+	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
+	
+	res = R7_GetVariableMat(r7Sn, functionSn, 2, &getImage);
+	if (res <= 0) {
+		R7_Printf(r7Sn, "ERROR! OpenGL_ShowImage get image = %d", res);
+		return -2;
+	}
+	
+	if (openglPtr->status == 1)
+	{
+		openglPtr->my_opengl_frame->img_panel->myImage = getImage.clone();
+		
+		openglPtr->my_opengl_frame->SetScrollbarFit();
+		
+		openglPtr->my_opengl_frame->SetClientSize(openglPtr->my_opengl_frame->img_panel->myImage.cols, openglPtr->my_opengl_frame->img_panel->myImage.rows);
+		
+		openglPtr->my_opengl_frame->img_panel->Refresh();
+		
+		openglPtr->status = 2;
+	}
+	else
+	{
+		printf("Status error! \n");
+		return 3;
+	}
 	
 	
 	return 1;
@@ -2956,8 +2942,6 @@ static int ImageKelvin_Debug(int r7Sn, int functionSn) {
 
 R7_API int R7Library_Init(void) {
 	// Register your functions in this API.
-
-	printf("R7Library_Init \n");
 	
 	R7_RegisterFunction("OpenGL_NewWindow", (R7Function_t)&OpenGL_NewWindow);
 	R7_RegisterFunction("OpenGL_ShowWindow", (R7Function_t)&OpenGL_ShowWindow);
