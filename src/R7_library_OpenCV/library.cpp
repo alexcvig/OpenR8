@@ -11,7 +11,6 @@ OpenCV library for R7.
 using namespace std;
 using namespace cv;
 
-
 typedef struct {
 	VideoCapture *videoCapture;
 	int deviceNum;
@@ -19,6 +18,7 @@ typedef struct {
 	Mat capturedImage;
 } OpenCV_t;
 
+vector<VideoCapture *> videoCapture_Vector;
 
 #ifdef __cplusplus
 extern "C"
@@ -46,6 +46,8 @@ static int OpenCV_VideoCapture_Init(int r7Sn, int functionSn) {
 	videoCapturePtr->apiID = CAP_ANY;
 	videoCapturePtr->capturedImage = Mat();
 
+
+	videoCapture_Vector.push_back(videoCapturePtr->videoCapture);
 	return 1;
 }
 
@@ -182,10 +184,14 @@ R7_API int R7Library_Init(void) {
 }
 
 R7_API int R7Library_Close(void) {
-	// If you have something to do before close R7(ex: free mesmory), you should handle them in this API.
-
-
-
+	// If you have something to do before close R7(ex: free memory), you should handle them in this API.
+	for (int i = 0; i < (int)videoCapture_Vector.size(); i++) {
+		if (videoCapture_Vector[i] != NULL) {
+			videoCapture_Vector[i]->~VideoCapture();
+			videoCapture_Vector[i] = NULL;
+		}
+	}
+	videoCapture_Vector.clear();
 	return 1;
 }
 
