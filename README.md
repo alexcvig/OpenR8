@@ -1,9 +1,9 @@
 # OpenR8    
-A.I. Software for Everyone
+AI Software for Everyone
 
-IDE software for A.I. algorithms.
+IDE software for AI algorithms.
 
-Implement A.I. algorithms without coding.
+Implement AI algorithms without coding.
     
 Community Edition (Windows 64 bit).
     
