@@ -18,7 +18,7 @@ R7 dll library uses UTF-8 encoding inside.
 //#include "wx/wxprec.h"
 
 
-#define R7_VERSION "18.0.4"
+#define R7_VERSION "18.0.5"
 
 #define R7_STRING_SIZE 4096
 #define R7_TYPE_NAME_SIZE 4096
@@ -119,7 +119,8 @@ extern "C"
 	R7_API int R7_AddFunction(int r7Sn, char *name, ...);
 
 	typedef int(__stdcall * R7CallbackHandler)(void *data);
-	R7_API int R7_QueueWxEvent(R7CallbackHandler r7CallbackHandler, void* data);
+	R7_API int R7_QueueWxEvent(R7CallbackHandler r7CallbackHandler, void *data);
+	R7_API int R7_ProcessWxPendingEvents();
 	R7_API void *R7_GetWxApp();
 	
 	R7_API int R7_Login(char *buffer, int bufferLength, char *userName, char *password);
