@@ -78,7 +78,7 @@
 <name>Int_Add</name>
 <posY>2</posY>
 <enable>1</enable>
-<remark>現在 For 變成固定大於等於(或者小於等於)，NumberOfFiles要手動幫它減1</remark>
+<remark></remark>
 <variableSn>3</variableSn>
 <variableSn>16</variableSn>
 <variableSn>3</variableSn>

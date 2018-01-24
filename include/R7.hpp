@@ -18,7 +18,7 @@ R7 dll library uses UTF-8 encoding inside.
 //#include "wx/wxprec.h"
 
 
-#define R7_VERSION "18.0.5"
+#define R7_VERSION "18.2.0"
 
 #define R7_STRING_SIZE 4096
 #define R7_TYPE_NAME_SIZE 4096

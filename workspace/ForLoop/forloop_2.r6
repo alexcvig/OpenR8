@@ -11,7 +11,7 @@
 <name>For_End</name>
 <posY>13</posY>
 <enable>1</enable>
-<remark>結束外層迴圈</remark>
+<remark></remark>
 <variableSn>1</variableSn>
 </function>
 <function>
@@ -32,7 +32,7 @@
 <name>For_End</name>
 <posY>11</posY>
 <enable>1</enable>
-<remark>結束內層迴圈</remark>
+<remark></remark>
 <variableSn>7</variableSn>
 </function>
 <function>
@@ -40,7 +40,7 @@
 <name>Int_Mul</name>
 <posY>5</posY>
 <enable>1</enable>
-<remark>做 i * j</remark>
+<remark></remark>
 <variableSn>6</variableSn>
 <variableSn>13</variableSn>
 <variableSn>14</variableSn>
@@ -76,7 +76,7 @@
 <name>Int_Compare</name>
 <posY>6</posY>
 <enable>1</enable>
-<remark>看 i * j 是否只有個位數</remark>
+<remark></remark>
 <variableSn>14</variableSn>
 <variableSn>16</variableSn>
 <variableSn>15</variableSn>
@@ -87,7 +87,7 @@
 <name>Function_Enable</name>
 <posY>7</posY>
 <enable>1</enable>
-<remark>如果 i * j 只有個位數，多印一個字元讓它對齊</remark>
+<remark></remark>
 <variableSn>17</variableSn>
 <variableSn>18</variableSn>
 </function>
@@ -109,7 +109,7 @@
 <name>For</name>
 <posY>1</posY>
 <enable>1</enable>
-<remark>兩層 for 迴圈的基本範例，輸出 9 9 乘法表。第一層迴圈，相當於 for( i = 1; i &lt; 10; i++)</remark>
+<remark></remark>
 <variableSn>1</variableSn>
 <variableSn>2</variableSn>
 <variableSn>3</variableSn>
@@ -120,7 +120,7 @@
 <name>For</name>
 <posY>2</posY>
 <enable>1</enable>
-<remark>第二層迴圈，相當於 for( j = 1; j &lt; 10; j++)</remark>
+<remark></remark>
 <variableSn>7</variableSn>
 <variableSn>9</variableSn>
 <variableSn>10</variableSn>
@@ -131,7 +131,7 @@
 <name>For_GetCount</name>
 <posY>3</posY>
 <enable>1</enable>
-<remark>取得i</remark>
+<remark></remark>
 <variableSn>1</variableSn>
 <variableSn>6</variableSn>
 </function>
@@ -140,7 +140,7 @@
 <name>For_GetCount</name>
 <posY>4</posY>
 <enable>1</enable>
-<remark>取得j</remark>
+<remark></remark>
 <variableSn>7</variableSn>
 <variableSn>13</variableSn>
 </function>
