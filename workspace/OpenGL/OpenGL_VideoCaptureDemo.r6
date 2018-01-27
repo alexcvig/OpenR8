@@ -3,7 +3,7 @@
 <version>0.0.0</version>
 <functionSnMax>24</functionSnMax>
 <variableSnMax>14</variableSnMax>
-<functionSnCount>13</functionSnCount>
+<functionSnCount>12</functionSnCount>
 <variableSnCount>14</variableSnCount>
 <functions>
 <function>
@@ -43,7 +43,7 @@
 <function>
 <sn>6</sn>
 <name>OpenCV_VideoCapture_Release</name>
-<posY>13</posY>
+<posY>12</posY>
 <enable>1</enable>
 <remark></remark>
 <variableSn>3</variableSn>
@@ -86,7 +86,7 @@
 <function>
 <sn>18</sn>
 <name>For_End</name>
-<posY>12</posY>
+<posY>11</posY>
 <enable>1</enable>
 <remark></remark>
 <variableSn>8</variableSn>
@@ -104,13 +104,6 @@
 <sn>23</sn>
 <name>R7_ProcessWxPendingEvents</name>
 <posY>6</posY>
-<enable>1</enable>
-<remark></remark>
-</function>
-<function>
-<sn>24</sn>
-<name>R7_ProcessWxPendingEvents</name>
-<posY>11</posY>
 <enable>1</enable>
 <remark></remark>
 </function>

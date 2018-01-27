@@ -15,13 +15,12 @@ using namespace std;
 using namespace cv;
 
 
-class OpenGLFrame : public wxFrame
-{
+class OpenGLFrame : public wxFrame {
 public:
 	OpenGLFrame(OpenGL_t *openGL, wxString title);
 	~OpenGLFrame();
 	
-	OpenGLCanvas *img_panel;
+	OpenGLCanvas *openGLCanvas;
 	wxScrollBar *sbh;
 	wxScrollBar *sbv;
 	Mat screenshot;
@@ -42,14 +41,14 @@ public:
 	
 	void hScroll(wxScrollEvent &evt) {
 		scrollX = sbh->GetThumbPosition();
-		img_panel->setX(scrollX);
-		img_panel->Refresh();
+		openGLCanvas->setX(scrollX);
+		openGLCanvas->Refresh();
 	}
 
 	void vScroll(wxScrollEvent &evt) {
 		scrollY = sbv->GetThumbPosition();
-		img_panel->setY(scrollY);
-		img_panel->Refresh();
+		openGLCanvas->setY(scrollY);
+		openGLCanvas->Refresh();
 	}
 	
 	void SetScrollbarFit(void);
@@ -318,7 +317,7 @@ OpenGLFrame::OpenGLFrame(OpenGL_t  *openGL, wxString title = wxT("OpenGL Window"
 	wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
 	wxBoxSizer *sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	
-	img_panel = new OpenGLCanvas(this, NULL, this);
+	openGLCanvas = new OpenGLCanvas(this, NULL, this);
 	sbh = new wxScrollBar(this, wxID_SCROLL_H, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL);
 	sbv = new wxScrollBar(this, wxID_SCROLL_V, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL);
 
@@ -341,7 +340,7 @@ OpenGLFrame::OpenGLFrame(OpenGL_t  *openGL, wxString title = wxT("OpenGL Window"
 	
 	SetScrollbarFit();
 	
-	sizer2->Add(img_panel, 1, wxEXPAND);
+	sizer2->Add(openGLCanvas, 1, wxEXPAND);
 	sizer2->Add(sbv, 0, wxEXPAND);
 	sizer->Add(sizer2, 1, wxEXPAND);
 	sizer->Add(sbh, 0, wxEXPAND);
@@ -351,7 +350,7 @@ OpenGLFrame::OpenGLFrame(OpenGL_t  *openGL, wxString title = wxT("OpenGL Window"
 	Center();
 
 	// Important! otherwise, image saving will be wrong
-	SetClientSize((img_panel->image.cols) + OPENGL_SCROLL_BAR_WIDTH, (img_panel->image.rows)+OPENGL_SCROLL_BAR_WIDTH);
+	SetClientSize((openGLCanvas->image.cols) + OPENGL_SCROLL_BAR_WIDTH, (openGLCanvas->image.rows)+OPENGL_SCROLL_BAR_WIDTH);
 
 }
 
@@ -362,29 +361,29 @@ OpenGLFrame::~OpenGLFrame()
 
 void OpenGLFrame::SetScrollbarFit(void)
 {
-	viewableWidth = img_panel->image.size().width;
-	viewableHeight = img_panel->image.size().height;
+	viewableWidth = openGLCanvas->image.size().width;
+	viewableHeight = openGLCanvas->image.size().height;
 		
-	mapWidth = img_panel->image.size().width;
-	mapHeight = img_panel->image.size().height;
+	mapWidth = openGLCanvas->image.size().width;
+	mapHeight = openGLCanvas->image.size().height;
 
 	sbh->SetScrollbar(start_pos, viewableWidth, mapWidth, viewableWidth / 4);
 	sbv->SetScrollbar(start_pos, viewableHeight, mapHeight, viewableHeight / 4);
 	
-	img_panel->setX(0);
-	img_panel->setY(0);
+	openGLCanvas->setX(0);
+	openGLCanvas->setY(0);
 }
 
 void OpenGLFrame::OnClose(wxCommandEvent& WXUNUSED(event))
 {
-	printf("OnClose\n");
+	//printf("OnClose\n");
 
 	Close(true);
 }
 
 void OpenGLFrame::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 {
-	printf("OnCloseWindow\n");
+	//printf("OnCloseWindow\n");
 
 	*isClosingFrame = 1;
 
@@ -395,9 +394,9 @@ void OpenGLFrame::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 
 void OpenGLFrame::OnFPS(wxCommandEvent& WXUNUSED(event))
 {
-	if (this->img_panel->isTestFps == false)
+	if (this->openGLCanvas->isTestFps == false)
 	{
-		this->img_panel->isTestFps = true;
+		this->openGLCanvas->isTestFps = true;
 
 		wxMenuBar *mb = this->GetMenuBar();
 
@@ -405,7 +404,7 @@ void OpenGLFrame::OnFPS(wxCommandEvent& WXUNUSED(event))
 	}
 	else
 	{
-		this->img_panel->isTestFps = false;
+		this->openGLCanvas->isTestFps = false;
 
 		wxMenuBar *mb = this->GetMenuBar();
 
@@ -625,7 +624,7 @@ static int OpenGL_ShowImageCallback(void *data) {
 	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
 	
 	if (openglPtr->openGLFrame == NULL) {
-		return -4;
+		return 2;
 	}
 
 	res = R7_GetVariableMat(r7Sn, functionSn, 2, &getImage);
@@ -636,13 +635,13 @@ static int OpenGL_ShowImageCallback(void *data) {
 
 	if (openglPtr->status == 1 || openglPtr->status == 2)
 	{
-		openglPtr->openGLFrame->img_panel->image = getImage.clone();
+		openglPtr->openGLFrame->openGLCanvas->image = getImage.clone();
 
 		openglPtr->openGLFrame->SetScrollbarFit();
 
-		openglPtr->openGLFrame->SetClientSize((openglPtr->openGLFrame->img_panel->image.cols)+OPENGL_SCROLL_BAR_WIDTH, (openglPtr->openGLFrame->img_panel->image.rows)+OPENGL_SCROLL_BAR_WIDTH);
+		openglPtr->openGLFrame->SetClientSize((openglPtr->openGLFrame->openGLCanvas->image.cols)+OPENGL_SCROLL_BAR_WIDTH, (openglPtr->openGLFrame->openGLCanvas->image.rows)+OPENGL_SCROLL_BAR_WIDTH);
 
-		openglPtr->openGLFrame->img_panel->Refresh();
+		openglPtr->openGLFrame->openGLCanvas->Refresh();
 
 		openglPtr->status = 2;
 	}
