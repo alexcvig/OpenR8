@@ -30,6 +30,7 @@ R7.license
 
 TensorFlow
 
+*.r6t
 
 # Visual Studio 2015 cache/options directory
 .vs/
