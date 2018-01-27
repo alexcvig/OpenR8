@@ -21,6 +21,7 @@ typedef struct {
 	Mat screenShot;
 	OpenGLFrame *openGLFrame = NULL;
 	int status;
+	int isClosingFrame = 0;
 } OpenGL_t;
 
 

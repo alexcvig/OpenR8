@@ -8,7 +8,7 @@ OpenGL library for R7.
 #include "library.hpp"
 
 
-#define R7_OPENGL_SCROLL_BAR_WIDTH 17
+#define OPENGL_SCROLL_BAR_WIDTH 17
 
 
 using namespace std;
@@ -35,8 +35,9 @@ public:
 	int mapWidth = 1500;
 	int mapHeight = 1500;
 	
-	bool isCloseFrame;
 	OpenGL_t *openGL;
+
+	int *isClosingFrame = NULL;
 
 	
 	void hScroll(wxScrollEvent &evt) {
@@ -310,7 +311,6 @@ OpenGLFrame::OpenGLFrame(OpenGL_t  *openGL, wxString title = wxT("OpenGL Window"
 	int stereoAttribList[] = { WX_GL_RGBA, WX_GL_DOUBLEBUFFER, WX_GL_STEREO, 0 };
 	
 	screenshot = Mat();
-	isCloseFrame = false;
 
 	//--- support all available image formats
 	wxInitAllImageHandlers();
@@ -351,7 +351,7 @@ OpenGLFrame::OpenGLFrame(OpenGL_t  *openGL, wxString title = wxT("OpenGL Window"
 	Center();
 
 	// Important! otherwise, image saving will be wrong
-	SetClientSize((img_panel->image.cols)+R7_OPENGL_SCROLL_BAR_WIDTH, (img_panel->image.rows)+R7_OPENGL_SCROLL_BAR_WIDTH);
+	SetClientSize((img_panel->image.cols) + OPENGL_SCROLL_BAR_WIDTH, (img_panel->image.rows)+OPENGL_SCROLL_BAR_WIDTH);
 
 }
 
@@ -377,12 +377,17 @@ void OpenGLFrame::SetScrollbarFit(void)
 
 void OpenGLFrame::OnClose(wxCommandEvent& WXUNUSED(event))
 {
+	printf("OnClose\n");
+
 	Close(true);
 }
 
 void OpenGLFrame::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 {
-	isCloseFrame = true;
+	printf("OnCloseWindow\n");
+
+	*isClosingFrame = 1;
+
 	openGL->openGLFrame = NULL;
 
 	Destroy();
@@ -413,7 +418,7 @@ void OpenGLFrame::OnScreenShot(void)
 	//--- snapshot
 	const wxSize ClientSize = GetClientSize();
 
-	Mat img((ClientSize.y)-R7_OPENGL_SCROLL_BAR_WIDTH, (ClientSize.x)-R7_OPENGL_SCROLL_BAR_WIDTH, CV_8UC3);
+	Mat img((ClientSize.y)-OPENGL_SCROLL_BAR_WIDTH, (ClientSize.x)-OPENGL_SCROLL_BAR_WIDTH, CV_8UC3);
 	
 	Mat img_flipped;
 	
@@ -478,6 +483,8 @@ static int OpenGL_NewWindowCallback(void *data) {
 
 	openglPtr->openGLFrame = new OpenGLFrame(openglPtr, wxString::FromUTF8(command));
 
+	openglPtr->openGLFrame->isClosingFrame = &openglPtr->isClosingFrame;
+
 	openglPtr->openGLFrame->Show();
 
 	return 1;
@@ -500,6 +507,8 @@ static int OpenGL_NewWindow(int r7Sn, int functionSn) {
 	}
 
 	R7_QueueWxEvent((R7CallbackHandler)OpenGL_NewWindowCallback, (void*)cbPtr);
+
+	R7_ProcessWxPendingEvents();
 
 	return 1;
 }
@@ -542,6 +551,8 @@ static int OpenGL_ShowWindow(int r7Sn, int functionSn) {
 	cbPtr->functionSn = functionSn;
 
 	R7_QueueWxEvent((R7CallbackHandler)OpenGL_ShowWindowCallback, (void*)cbPtr);
+
+	R7_ProcessWxPendingEvents();
 
 	return 1;
 }
@@ -590,6 +601,8 @@ static int OpenGL_HideWindow(int r7Sn, int functionSn) {
 
 	R7_QueueWxEvent((R7CallbackHandler)OpenGL_HideWindowCallback, (void *)cbPtr);
 
+	R7_ProcessWxPendingEvents();
+
 	return 1;
 }
 
@@ -627,7 +640,7 @@ static int OpenGL_ShowImageCallback(void *data) {
 
 		openglPtr->openGLFrame->SetScrollbarFit();
 
-		openglPtr->openGLFrame->SetClientSize((openglPtr->openGLFrame->img_panel->image.cols)+R7_OPENGL_SCROLL_BAR_WIDTH, (openglPtr->openGLFrame->img_panel->image.rows)+R7_OPENGL_SCROLL_BAR_WIDTH);
+		openglPtr->openGLFrame->SetClientSize((openglPtr->openGLFrame->img_panel->image.cols)+OPENGL_SCROLL_BAR_WIDTH, (openglPtr->openGLFrame->img_panel->image.rows)+OPENGL_SCROLL_BAR_WIDTH);
 
 		openglPtr->openGLFrame->img_panel->Refresh();
 
@@ -645,14 +658,17 @@ static int OpenGL_ShowImageCallback(void *data) {
 static int OpenGL_ShowImage(int r7Sn, int functionSn) {
 	int res;
 	void *variableObject = NULL;
-	
+
 	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
 	if (res <= 0) {
 		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
 		return -2;
 	}
-	
 	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
+
+	if (openglPtr->isClosingFrame == 1) {
+		return 2;
+	}
 	
 	if (openglPtr->openGLFrame == NULL) {
 		return -4;
@@ -665,6 +681,8 @@ static int OpenGL_ShowImage(int r7Sn, int functionSn) {
 	cbPtr->functionSn = functionSn;
 
 	R7_QueueWxEvent((R7CallbackHandler)OpenGL_ShowImageCallback, (void *)cbPtr);
+
+	R7_ProcessWxPendingEvents();
 	
 	return 1;
 }
@@ -734,6 +752,8 @@ static int OpenGL_GetImage(int r7Sn, int functionSn) {
 	cbPtr->functionSn = functionSn;
 
 	R7_QueueWxEvent((R7CallbackHandler)OpenGL_GetImageCallback, (void *)cbPtr);
+
+	R7_ProcessWxPendingEvents();
 	
 	return 1;
 }
