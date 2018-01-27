@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <program>
 <version>0.0.0</version>
-<functionSnMax>22</functionSnMax>
+<functionSnMax>24</functionSnMax>
 <variableSnMax>14</variableSnMax>
-<functionSnCount>12</functionSnCount>
+<functionSnCount>13</functionSnCount>
 <variableSnCount>14</variableSnCount>
 <functions>
 <function>
@@ -43,7 +43,7 @@
 <function>
 <sn>6</sn>
 <name>OpenCV_VideoCapture_Release</name>
-<posY>12</posY>
+<posY>13</posY>
 <enable>1</enable>
 <remark></remark>
 <variableSn>3</variableSn>
@@ -66,14 +66,6 @@
 <variableSn>5</variableSn>
 </function>
 <function>
-<sn>11</sn>
-<name>Sleep</name>
-<posY>6</posY>
-<enable>1</enable>
-<remark></remark>
-<variableSn>12</variableSn>
-</function>
-<function>
 <sn>15</sn>
 <name>R7_EnableWxWidgets</name>
 <posY>1</posY>
@@ -94,7 +86,7 @@
 <function>
 <sn>18</sn>
 <name>For_End</name>
-<posY>11</posY>
+<posY>12</posY>
 <enable>1</enable>
 <remark></remark>
 <variableSn>8</variableSn>
@@ -107,6 +99,20 @@
 <remark></remark>
 <variableSn>5</variableSn>
 <variableSn>2</variableSn>
+</function>
+<function>
+<sn>23</sn>
+<name>R7_ProcessWxPendingEvents</name>
+<posY>6</posY>
+<enable>1</enable>
+<remark></remark>
+</function>
+<function>
+<sn>24</sn>
+<name>R7_ProcessWxPendingEvents</name>
+<posY>11</posY>
+<enable>1</enable>
+<remark></remark>
 </function>
 </functions>
 <variables>
