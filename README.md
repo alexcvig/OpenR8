@@ -10,7 +10,7 @@ Support for Windows 7 SP1 64 bit or higher.
 
 Support for Intel Core i5 with AVX2 instruction set or higher.
     
-Please download the official release from the following URL. http://www.openrobot.club/article/index?sn=10935       
+Please download the official release from the following URL. http://www.openrobot.club/openr8       
 
 This Community Edition is for non-commercial application only.	
 	
