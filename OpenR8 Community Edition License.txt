@@ -7,5 +7,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 This Community Edition is for non-commercial application only.
 
 For commercial application, please contact us to purchase Professional Edition.
-Email: leaderg@leaderg.com
+Email: openrobot@openrobot.club
 Website: http://www.openrobot.club
