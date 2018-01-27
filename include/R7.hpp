@@ -13,12 +13,9 @@ R7 dll library uses UTF-8 encoding inside.
 #include <jansson.h>
 #include <opencv2\opencv.hpp>
 
-//#include "wx/wx.h"
-//#include "wx/glcanvas.h"
-//#include "wx/wxprec.h"
 
+#define R7_VERSION "18.4.0"
 
-#define R7_VERSION "18.3.0"
 
 #define R7_STRING_SIZE 4096
 #define R7_TYPE_NAME_SIZE 4096
@@ -63,12 +60,11 @@ extern "C"
 	R7_API int R7_New();
 	R7_API int R7_Release(int sn);
 
-	R7_API int R7_Run(int sn, char *workspacePath, int isDebug);
+	R7_API int R7_GetVersion(char *str, int strSize);
 
+	R7_API int R7_Run(int sn, char *workspacePath, int isDebug);
 	
 	R7_API int R7_RegisterFunction(char *name, R7Function_t r7Function);
-
-	R7_API int R7_GetVersion(char *str, int strSize);
 	
 	R7_API int R7_GetFunctionEnable(int r7Sn, int functionSn, bool *enable);
 	R7_API int R7_SetFunctionEnable(int r7Sn, int functionSn, bool enable);
@@ -118,7 +114,7 @@ extern "C"
 	R7_API int R7_AddVariable(int r7Sn, char *name, char *type, char *value);
 	R7_API int R7_AddFunction(int r7Sn, char *name, ...);
 
-	typedef int(__stdcall * R7CallbackHandler)(void *data);
+	typedef int(*R7CallbackHandler)(void *data);
 	R7_API int R7_QueueWxEvent(R7CallbackHandler r7CallbackHandler, void *data);
 	R7_API int R7_ProcessWxPendingEvents();
 	R7_API void *R7_GetWxApp();
