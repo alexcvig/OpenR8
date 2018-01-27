@@ -205,6 +205,7 @@ OpenGLContext& OpenGLCanvas::GetContext(wxGLCanvas *canvas)
 	}
 	glContext = openGLContext;
 	glContext->SetCurrent(*canvas);
+
 	return *glContext;
 }
 
@@ -233,17 +234,19 @@ void OpenGLCanvas::OnPaint(wxPaintEvent &WXUNUSED(event))
 				frameCount = 0;
 			}
 		}
-		char text_buf[64];
-		sprintf(text_buf, "%d fps", fps);
-		
-		putText(image, string(text_buf), Point(image.size().width-120, 30), 0, 1, Scalar(34,221,34), 2);
+
+		if (fps > 0) {
+			char text_buf[64];
+			sprintf(text_buf, "%d fps", fps);
+			putText(image, string(text_buf), Point(image.size().width - 120, 30), 0, 1, Scalar(34, 221, 34), 2);
+		}
 	}
 	
 	const wxSize ClientSize = GetClientSize();		//--- size of canvas
 	
 	OpenGLContext& canvas = GetContext(this);
 
-	glViewport(0-x, ClientSize.y-image.size().height*1+y, image.size().width*1, image.size().height*1);
+	glViewport(0 - x, ClientSize.y - image.size().height * 1 + y, image.size().width * 1, image.size().height * 1);
 
 	// Render the graphics and swap the buffers.
 	GLboolean quadStereoSupported;
@@ -262,9 +265,7 @@ void OpenGLCanvas::OnPaint(wxPaintEvent &WXUNUSED(event))
 		glFrustum(-0.53f, 0.47f, -0.5f, 0.5f, 1.0f, 3.0f);
 		canvas.DrawImage(image, ClientSize.x, ClientSize.y, x, y, 1);
 		CheckGLError();
-	}
-	else
-	{
+	} else {
 		canvas.DrawImage(image, ClientSize.x, ClientSize.y, x, y, 1);
 		if (useStereo && !stereoWarningAlreadyDisplayed)
 		{
@@ -376,15 +377,11 @@ void OpenGLFrame::SetScrollbarFit(void)
 
 void OpenGLFrame::OnClose(wxCommandEvent& WXUNUSED(event))
 {
-	//printf("OnClose\n");
-
 	Close(true);
 }
 
 void OpenGLFrame::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 {
-	//printf("OnCloseWindow\n");
-
 	*isClosingFrame = 1;
 
 	openGL->openGLFrame = NULL;
