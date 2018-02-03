@@ -35,7 +35,7 @@
 </variable>
 <variable>
 <sn>2</sn>
-<name>IsGPU</name>
+<name>EnableGPU</name>
 <type>bool</type>
 <value>0</value>
 <remark></remark>
@@ -44,7 +44,7 @@
 <sn>3</sn>
 <name>SolverPath</name>
 <type>string</type>
-<value>testFile\mnist\fc_solver.prototxt</value>
+<value>data\solver.prototxt</value>
 <remark></remark>
 </variable>
 </variables>
