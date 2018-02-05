@@ -209,7 +209,7 @@ R7_API int R7Library_GetSupportList(char *str, int strSize) {
 	json_object_set_new(variable, "variable", variableObject);
 	json_object_set_new(variableObject, "name", json_string("Name"));
 	json_object_set_new(variableObject, "type", json_string("string"));
-	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_object_set_new(variableObject, "direction", json_string("IN"));
 	json_array_append(variableArray, variable);
 
 	// CGI_ParseRequest
