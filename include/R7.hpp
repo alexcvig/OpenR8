@@ -14,7 +14,7 @@ R7 dll library uses UTF-8 encoding inside.
 #include <opencv2\opencv.hpp>
 
 
-#define R7_VERSION "18.4.0"
+#define R7_VERSION "18.5.0"
 
 
 #define R7_STRING_SIZE 4096
@@ -73,6 +73,8 @@ extern "C"
 	R7_API int R7_GetVariableType(int r7Sn, int variableSn, int *variableType);
 	R7_API int R7_GetVariableString(int r7Sn, int functionSn, int variableNum, char *str, int strSize);
 	R7_API int R7_SetVariableString(int r7Sn, int functionSn, int variableNum, char *str);
+	R7_API int R7_GetVariableBinary(int r7Sn, int functionSn, int variableNum, void *binary, int binarySize);
+	R7_API int R7_SetVariableBinary(int r7Sn, int functionSn, int variableNum, void *binary, int binarySize);
 	R7_API int R7_GetVariableInt(int r7Sn, int functionSn, int variableNum, int *variableValue);
 	R7_API int R7_SetVariableInt(int r7Sn, int functionSn, int variableNum, int variableValue);
 	R7_API int R7_GetVariableBool(int r7Sn, int functionSn, int variableNum, bool *variableValue);
