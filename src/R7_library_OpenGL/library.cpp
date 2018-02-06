@@ -36,8 +36,6 @@ public:
 	
 	OpenGL_t *openGL;
 
-	int *isClosingFrame = NULL;
-
 	
 	void hScroll(wxScrollEvent &evt) {
 		scrollX = sbh->GetThumbPosition();
@@ -382,7 +380,7 @@ void OpenGLFrame::OnClose(wxCommandEvent& WXUNUSED(event))
 
 void OpenGLFrame::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 {
-	*isClosingFrame = 1;
+	openGL->isClosingFrame = 1;
 
 	openGL->openGLFrame = NULL;
 
@@ -463,6 +461,8 @@ static int OpenGL_NewWindowCallback(void *data) {
 	openglPtr->screenShot = Mat();
 
 	openglPtr->status = 0;
+
+	openglPtr->isClosingFrame = 0;
 	
 	char command[R7_STRING_SIZE];
 	command[0] = '\0';
@@ -478,8 +478,6 @@ static int OpenGL_NewWindowCallback(void *data) {
 	command[strSize] = '\0';
 
 	openglPtr->openGLFrame = new OpenGLFrame(openglPtr, wxString::FromUTF8(command));
-
-	openglPtr->openGLFrame->isClosingFrame = &openglPtr->isClosingFrame;
 
 	openglPtr->openGLFrame->Show();
 
@@ -532,7 +530,7 @@ static int OpenGL_ShowWindowCallback(void *data) {
 	}
 	else
 	{
-		printf("Status error! \n");
+		//printf("Status error! \n");
 		return 3;
 	}
 	
@@ -581,7 +579,7 @@ static int OpenGL_HideWindowCallback(void *data) {
 	}
 	else
 	{
-		printf("Status error! \n");
+		//printf("Status error! \n");
 		return 3;
 	}
 	
@@ -621,7 +619,7 @@ static int OpenGL_ShowImageCallback(void *data) {
 	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
 	
 	if (openglPtr->openGLFrame == NULL) {
-		return 2;
+		return -4;
 	}
 
 	res = R7_GetVariableMat(r7Sn, functionSn, 2, &getImage);
@@ -644,7 +642,9 @@ static int OpenGL_ShowImageCallback(void *data) {
 	}
 	else
 	{
-		printf("Status error! \n");
+		//printf("Status error! \n");
+
+		// return 3 or -3 here won't stop r7
 		return 3;
 	}
 
@@ -663,10 +663,8 @@ static int OpenGL_ShowImage(int r7Sn, int functionSn) {
 	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
 
 	if (openglPtr->isClosingFrame == 1) {
-		return 2;
-	}
-	
-	if (openglPtr->openGLFrame == NULL) {
+
+		// if frame is closed, then stop r7
 		return -4;
 	}
 	
@@ -717,7 +715,7 @@ static int OpenGL_GetImageCallback(void *data) {
 	}
 	else
 	{
-		printf("Status error! \n");
+		//printf("Status error! \n");
 		return 3;
 	}
 	
@@ -737,7 +735,7 @@ static int OpenGL_GetImage(int r7Sn, int functionSn) {
 	
 	OpenGL_t *openglPtr = ((OpenGL_t*)variableObject);
 	
-	if (openglPtr->openGLFrame == NULL) {
+	if (openglPtr->isClosingFrame == 1) {
 		return -4;
 	}
 	
