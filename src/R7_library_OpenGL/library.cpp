@@ -222,7 +222,7 @@ void OpenGLCanvas::OnPaint(wxPaintEvent &WXUNUSED(event))
 		{
 			frameCount++;
 			
-			if (frameCount >= 10) {
+			if (frameCount >= 5) {
 
 				delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
 
@@ -327,7 +327,7 @@ OpenGLFrame::OpenGLFrame(OpenGL_t  *openGL, wxString title = wxT("OpenGL Window"
     fileMenu->Append(wxID_CLOSE, wxT("&Exit"),
                      wxT("Quit this program"));
 					 
-	settingMenu->Append(wxID_FPS, wxT("&Display Frame Rate"),
+	settingMenu->Append(wxID_FPS, wxT("&Show Frame Rate"),
                      wxT(""));
 					 
 	wxMenuBar *menuBar = new wxMenuBar();
@@ -384,6 +384,8 @@ void OpenGLFrame::OnCloseWindow(wxCloseEvent& WXUNUSED(event))
 
 	openGL->openGLFrame = NULL;
 
+	Sleep(3000);
+
 	Destroy();
 }
 
@@ -403,7 +405,7 @@ void OpenGLFrame::OnFPS(wxCommandEvent& WXUNUSED(event))
 
 		wxMenuBar *mb = this->GetMenuBar();
 
-		mb->SetLabel(wxID_FPS, wxT("Display Frame Rate"));
+		mb->SetLabel(wxID_FPS, wxT("Show Frame Rate"));
 	}
 }
 
