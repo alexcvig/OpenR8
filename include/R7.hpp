@@ -14,7 +14,7 @@ R7 dll library uses UTF-8 encoding inside.
 #include <opencv2\opencv.hpp>
 
 
-#define R7_VERSION "18.5.0"
+#define R7_VERSION "18.7.0"
 
 
 #define R7_STRING_SIZE 4096

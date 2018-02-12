@@ -1,0 +1,7 @@
+﻿File,檔案
+Undo,還原
+Redo,反還原
+Library,函式庫
+New,新增
+Open,開啟
+Save,儲存
