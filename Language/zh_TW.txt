@@ -1,7 +1,17 @@
-﻿File,檔案
-Undo,還原
-Redo,反還原
-Library,函式庫
-New,新增
-Open,開啟
-Save,儲存
+﻿{
+  "File": "檔案", 
+  "Undo": "還原", 
+  "Redo": "反還原", 
+  "Library": "函式庫", 
+  "Workspace": "工作路徑",
+  "Release": "運行",
+  "Debug": "測試運行",
+  "About": "關於",
+  "New": "新增", 
+  "Open": "開啟", 
+  "Save": "儲存",
+  "Save As": "另存",
+  "Export": "匯出",
+  "Exit": "離開",
+  "Language": "切換語系"
+}
