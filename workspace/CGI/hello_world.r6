@@ -1,6 +1,6 @@
 #!R7
 # -*- coding: utf-8 -*-
-# R7 version 18.7.0
+# R7 version 18.8.0
 <?xml version="1.0" encoding="utf-8"?>
 <program>
 <version>0.0.0</version>
@@ -14,7 +14,7 @@
 <name>Println</name>
 <posY>3</posY>
 <enable>1</enable>
-<remark>test</remark>
+<remark>Hello World</remark>
 <variableSn>0</variableSn>
 <variableSn>0</variableSn>
 <variableSn>0</variableSn>
@@ -27,7 +27,7 @@
 <name>Println</name>
 <posY>1</posY>
 <enable>1</enable>
-<remark>"Content-type:text/html"</remark>
+<remark>Content-type: text/html</remark>
 <variableSn>0</variableSn>
 <variableSn>0</variableSn>
 <variableSn>0</variableSn>
