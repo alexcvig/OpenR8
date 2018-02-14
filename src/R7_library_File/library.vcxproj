@@ -32,6 +32,7 @@
     <TargetName>File</TargetName>
     <GenerateManifest>true</GenerateManifest>
     <TargetExt>.dll</TargetExt>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

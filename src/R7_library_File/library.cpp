@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2004-2018 Open Robot Club. All rights reserved.
 File library for R7.
 */
@@ -16,116 +16,392 @@ extern "C"
 #endif
 
 
-static int File_GetBinary(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
-
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
-	}
-
-	return 1;
-}
-
-
-static int File_GetString(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
-
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
-	}
-
-	return 1;
-}
-
-
-static int File_ParseRequest(int r7Sn, int functionSn) {
-
-	int res;
-	void *variableObject = NULL;
-
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
-	}
-
-	return 1;
-}
-
-
-static int File_Print(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
-
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
-	}
-
-	return 1;
-}
-
-
-static int File_PrintBinary(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
-
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
-	}
-
-	return 1;
-}
-
-
-static int File_PrintInfo(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
-
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
-	}
-
-	return 1;
-}
-
-
-static int File_Println(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
 	
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
+static int File_DeleteFile(int r7Sn, int functionSn) {
+
+	char fileName[R7_STRING_SIZE];
+
+	R7_GetVariableString(r7Sn, functionSn, 2, fileName, R7_STRING_SIZE);
+
+	//recipe path wchar_t
+	char workSpacePath[R7_STRING_SIZE];
+	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+
+	wchar_t workSpacePathW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
+	
+	wchar_t fileNameW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
+
+	wchar_t filePathW[R7_STRING_SIZE];
+	wsprintf(filePathW, L"%s%s\0\0", workSpacePathW, fileNameW);
+
+	HANDLE file = CreateFile(filePathW, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+
+	if (file == INVALID_HANDLE_VALUE) {
+		//printf("File does not exist!\n");
+		R7_SetVariableInt(r7Sn, functionSn, 1, -2);
+		CloseHandle(file);
+		return 1;
 	}
+
+	CloseHandle(file);
+
+	SHFILEOPSTRUCT dFile;
+
+	memset(&dFile, 0, sizeof(SHFILEOPSTRUCT));
+	dFile.wFunc = FO_DELETE;
+	dFile.fFlags = FOF_ALLOWUNDO; // | FOF_NOCONFIRMATION;
+	dFile.pFrom = filePathW;
+	dFile.fAnyOperationsAborted = true;
+	
+	int result = ::SHFileOperation(&dFile);
+	int result2;
+
+	if (result == 0) {
+		result2 = 1;
+		//printf("Delete file success\n");
+	} else {
+		result2 = -1;
+		//printf("Delete file fail\n");
+	}
+
+	R7_SetVariableInt(r7Sn, functionSn, 1, result2);
 
 	return 1;
 }
 
+static int File_DeleteDir(int r7Sn, int functionSn) {
+	char dirName[R7_STRING_SIZE];
+
+	R7_GetVariableString(r7Sn, functionSn, 2, dirName, R7_STRING_SIZE);
+
+	char workSpacePath[R7_STRING_SIZE];
+	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+	wchar_t workSpacePathW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
+	
+	wchar_t dirNameW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, dirName, -1, dirNameW, R7_STRING_SIZE * 2);
+
+	wchar_t DirPath[R7_STRING_SIZE];
+	wsprintf(DirPath, L"%s%s\0\0", workSpacePathW, dirNameW);
+
+	LPCWSTR p = DirPath;
+	DWORD ftyp = GetFileAttributesW(p);
+
+	if (ftyp == INVALID_FILE_ATTRIBUTES) {
+		//printf("Dir does not exist!\n");
+		R7_SetVariableInt(r7Sn, functionSn, 1, -2);
+		return 1;
+	}
+
+	SHFILEOPSTRUCT dDir;
+
+	memset(&dDir, 0, sizeof(SHFILEOPSTRUCT));
+	dDir.wFunc = FO_DELETE;
+	dDir.fFlags = FOF_ALLOWUNDO; // | FOF_NOCONFIRMATION;
+	dDir.pFrom = DirPath;
+	dDir.fAnyOperationsAborted = true;
+	
+	int result = ::SHFileOperation(&dDir);
+	int result2;
+
+	if (result == 0) {
+		result2 = 1;
+		//printf("remove folder success\n");
+	} else {
+		result2 = -1;
+		//printf("remove folder fail\n");
+	}
+
+	R7_SetVariableInt(r7Sn, functionSn, 2, result2);
+	return 1;
+}
+
+static int File_ReadImage(int r7Sn, int functionSn) {
+	char fileName[R7_STRING_SIZE];
+	R7_GetVariableString(r7Sn, functionSn, 3, fileName, R7_STRING_SIZE);
+
+	cv::Mat mat = cv::Mat();
+
+	char workSpacePath[R7_STRING_SIZE];
+	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+
+	wchar_t fileNameW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
+	
+	wchar_t WorkSpacePathW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, WorkSpacePathW, R7_STRING_SIZE * 2);
+	
+	wchar_t FilePathW[R7_STRING_SIZE];
+	wsprintf(FilePathW, L"%s%s", WorkSpacePathW, fileNameW);
+
+	HANDLE file = CreateFile(FilePathW, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+	if (file == INVALID_HANDLE_VALUE) {
+		file = CreateFile(fileNameW, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+		if (file == INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(file);
+			R7_SetVariableInt(r7Sn, functionSn, 1, 0);
+			return 1;
+		}
+	}
+
+	DWORD dwBytesRead, dwBytesToRead, fileSize;
+	char *buffer, *tmpBuf;
+
+	fileSize = GetFileSize(file, NULL);//get file size
+
+	buffer = (char *)malloc(fileSize);
+	//ZeroMemory(buffer, fileSize);
+
+	dwBytesToRead = fileSize;
+	dwBytesRead = 0;
+	tmpBuf = buffer;
+
+	do { 
+		ReadFile(file, tmpBuf, dwBytesToRead, &dwBytesRead, NULL);
+		if (dwBytesRead == 0) {
+			break;
+		}
+		dwBytesToRead -= dwBytesRead;
+		tmpBuf += dwBytesRead;
+	} while (dwBytesToRead > 0);
+
+	mat = cv::imdecode(cv::Mat(1, fileSize, CV_8UC3, buffer), CV_LOAD_IMAGE_COLOR);
+
+	if (mat.cols == 0) {
+		R7_SetVariableInt(r7Sn, functionSn, 1, 0);
+		return 1;
+	}
+	free(buffer);
+	CloseHandle(file);
+
+	R7_SetVariableInt(r7Sn, functionSn, 1, fileSize);
+	R7_SetVariableMat(r7Sn, functionSn, 2, mat);
+
+
+	mat.release();
+
+	return 1;
+}
+
+static int File_SaveImage(int r7Sn, int functionSn) {
+	// TODO
+
+	//Mat inputMat = Mat();
+	//R7_SetVariableMat(r7Sn, functionSn, 2, inputMat);
+	//char inPutFileString[R7_STRING_SIZE];
+	//R7_GetVariableString(r7Sn, functionSn, 3, inPutFileString, R7_STRING_SIZE);
+
+	//char workSpacePath[R7_STRING_SIZE];
+	//R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+
+
+	//wchar_t fileNameW[R7_STRING_SIZE];
+	//MultiByteToWideChar(CP_UTF8, 0, inPutFileString, -1, fileNameW, R7_STRING_SIZE * 2);
+	////printf("%ls", fileNameW);
+
+	//wchar_t WorkSpacePathW[R7_STRING_SIZE];
+	//MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, WorkSpacePathW, R7_STRING_SIZE * 2);
+	////printf("%ls", WorkSpacePathW);
+
+	//wchar_t FilePathW[R7_STRING_SIZE] = L"";
+	//wsprintf(FilePathW, L"%s%s", WorkSpacePathW, fileNameW);
+	////printf("%ls", FilePathW);
+
+	//HANDLE pFile = CreateFile(FilePathW, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	//if (pFile == INVALID_HANDLE_VALUE)
+	//{
+	//	pFile = CreateFile(fileNameW, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	//	if (pFile == INVALID_HANDLE_VALUE)
+	//	{
+	//		CloseHandle(pFile);
+	//		R7_SetVariableInt(r7Sn, functionSn, 1, 0);
+	//		return 1;
+	//	}
+	//}
+
+
+	//char *tmpBuf;
+	//DWORD dwBytesWrite, dwBytesToWrite;
+	//DWORD contentLen = DWORD(inputMat.cols * inputMat.rows);
+
+	//CloseHandle(pFile);
+
+	//return TRUE;
+
+	//R7_SetVariableInt(r7Sn, functionSn, 1, 0);
+
+	return 1;
+}
+
+int File_ReadString(int r7Sn, int functionSn) {
+	//result
+	//return -1:file name is NULL
+	//return -2:file is not exist
+
+	int result = 0;
+
+	//output
+	//char string[R7_STRING_SIZE];
+	//intput
+	char fileName[R7_STRING_SIZE];
+	R7_GetVariableString(r7Sn, functionSn, 3, fileName, R7_STRING_SIZE);
+
+	if (fileName[0] == '\0') {
+//		R7_Printf(r7Sn, "\nERROR! fileName\n");
+		result = -1;
+		return -1;
+	}
+
+	char workSpacePath[R7_STRING_SIZE];
+	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+
+	wchar_t workSpacePathW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
+	
+	wchar_t fileNameW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
+
+	wchar_t filePathW[R7_STRING_SIZE];
+	wsprintf(filePathW, L"%s%s\0", workSpacePathW, fileNameW);
+
+	HANDLE hDstFile;
+	hDstFile = CreateFile(filePathW, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hDstFile == INVALID_HANDLE_VALUE) {
+		hDstFile = CreateFile(fileNameW, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (hDstFile == INVALID_HANDLE_VALUE) {
+			CloseHandle(hDstFile);
+			//R7_Printf(r7Sn, "\nERROR! fileName is not exist\n");
+			result = -2;
+			return -2;
+		}
+	}
+
+	result = GetFileSize(hDstFile, NULL);
+	char *string, *tmpBuf;
+	DWORD dwBytesToRead, dwBytesRead;
+	string = (char *)malloc(result + 1);
+	//ZeroMemory(buffer, result);
+
+	dwBytesToRead = result;
+	dwBytesRead = 0;
+	tmpBuf = string;
+
+	do {
+		ReadFile(hDstFile, tmpBuf, dwBytesToRead, &dwBytesRead, NULL);
+		if (dwBytesRead == 0) {
+			break;
+		}
+
+		dwBytesToRead -= dwBytesRead;
+		tmpBuf += dwBytesRead;
+
+	} while (dwBytesToRead > 0);
+	
+	CloseHandle(hDstFile);
+	
+	string[result] = '\0';
+	
+	// TODO: Detect string encoding format. Then convert to UTF-8.
+	
+	R7_SetVariableInt(r7Sn, functionSn, 1, result);
+	R7_SetVariableString(r7Sn, functionSn, 2, string); // UTF-8
+
+	free(string);
+
+	return 1;
+}
+
+static int File_ReadBinary(int r7Sn, int functionSn) {
+	//result
+	//return -1:file name is NULL
+	//return -2:file is not exist
+
+	int result = 0;
+
+	//output
+	unsigned char *binary;
+
+	//intput
+	char fileName[R7_STRING_SIZE];
+	R7_GetVariableString(r7Sn, functionSn, 3, fileName, R7_STRING_SIZE);
+
+	if (fileName[0] == '\0') {
+		//R7_Printf(r7Sn, "\nERROR! fileName\n");
+		result = -1;
+		return -1;
+	}
+
+	//recipe path
+	char workSpacePath[R7_STRING_SIZE];
+	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+
+	//recipe path wchar_t
+	wchar_t workSpacePathW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
+	
+	wchar_t fileNameW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
+
+	wchar_t filePathW[R7_STRING_SIZE];
+	wsprintf(filePathW, L"%s%s\0", workSpacePathW, fileNameW);
+
+	HANDLE hDstFile;
+	hDstFile = CreateFile(filePathW, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hDstFile == INVALID_HANDLE_VALUE) {
+		hDstFile = CreateFile(fileNameW, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (hDstFile == INVALID_HANDLE_VALUE) {
+			CloseHandle(hDstFile);
+			//R7_Printf(r7Sn, "\nERROR! fileName is not exist\n");
+			result = -2;
+			return -2;
+		}
+	}
+	//GetFileSize
+	result = GetFileSize(hDstFile, NULL);
+	unsigned char *tmpBuf;
+	DWORD dwBytesToRead, dwBytesRead;
+	binary = (unsigned char *)malloc(result);
+	//ZeroMemory(binary, result);
+
+	dwBytesToRead = result;
+	dwBytesRead = 0;
+	tmpBuf = binary;
+
+	do {
+		ReadFile(hDstFile, tmpBuf, dwBytesToRead, &dwBytesRead, NULL);
+		if (dwBytesRead == 0) {
+			break;
+		}
+		dwBytesToRead -= dwBytesRead;
+		tmpBuf += dwBytesRead;
+	} while (dwBytesToRead > 0);
+	//binary[result] = '\0';
+	//printf("binary = %s", binary);
+	CloseHandle(hDstFile);
+
+	R7_SetVariableInt(r7Sn, functionSn, 1, result);
+	R7_SetVariableBinary(r7Sn, functionSn, 2, binary, result);
+
+	return 1;
+}
 
 R7_API int R7Library_Init(void) {
+	SetConsoleOutputCP(65001);
+	setlocale(LC_ALL, "en_US.UTF-8");
+
 	// Register your functions in this API.
 	
-	R7_RegisterFunction("File_GetBinary", (R7Function_t)&File_GetBinary);
-	R7_RegisterFunction("File_GetString", (R7Function_t)&File_GetString);
-	R7_RegisterFunction("File_ParseRequest", (R7Function_t)&File_ParseRequest);
-	R7_RegisterFunction("File_Print", (R7Function_t)&File_Print);
-	R7_RegisterFunction("File_PrintBinary", (R7Function_t)&File_PrintBinary);
-	R7_RegisterFunction("File_PrintInfo", (R7Function_t)&File_PrintInfo);
-	R7_RegisterFunction("File_Println", (R7Function_t)&File_Println);
-
+	R7_RegisterFunction("File_ReadImage", (R7Function_t)&File_ReadImage);
+	R7_RegisterFunction("File_SaveImage", (R7Function_t)&File_SaveImage);
+	R7_RegisterFunction("File_ReadBinary", (R7Function_t)&File_ReadBinary);
+	R7_RegisterFunction("File_ReadString", (R7Function_t)&File_ReadString);
+	R7_RegisterFunction("File_DeleteDir", (R7Function_t)&File_DeleteDir);
+	R7_RegisterFunction("File_DeleteFile", (R7Function_t)&File_DeleteFile);
+		
 	return 1;
 }
 
@@ -163,122 +439,160 @@ R7_API int R7Library_GetSupportList(char *str, int strSize) {
 
 	functionArray = json_array();
 	json_object_set_new(functionGroupObject, "functions", functionArray);
-	
-	// File_GetBinary
+
+	//File_ReadImage
 	function = json_object();
 	functionObject = json_object();
 	json_object_set_new(function, "function", functionObject);
-	json_object_set_new(functionObject, "name", json_string("File_GetBinary"));
+	json_object_set_new(functionObject, "name", json_string("File_ReadImage"));
+	json_object_set_new(functionObject, "doc", json_string(""));
+	json_array_append(functionArray, function);
+	variableArray = json_array();
+	json_object_set_new(functionObject, "variables", variableArray);	
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("Image"));
+	json_object_set_new(variableObject, "type", json_string("image"));
+	json_object_set_new(variableObject, "direction", json_string("IN"));
+	json_array_append(variableArray, variable);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("fileName"));
+	json_object_set_new(variableObject, "type", json_string("string"));
+	json_object_set_new(variableObject, "direction", json_string("IN, FILE_PATH"));
+	json_array_append(variableArray, variable);
+	
+	//File_DeleteDir
+	function = json_object();
+	functionObject = json_object();
+	json_object_set_new(function, "function", functionObject);
+	json_object_set_new(functionObject, "name", json_string("File_DeleteDir"));
+	json_object_set_new(functionObject, "doc", json_string(""));
+	json_array_append(functionArray, function);
+	variableArray = json_array();
+	json_object_set_new(functionObject, "variables", variableArray);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("dirName"));
+	json_object_set_new(variableObject, "type", json_string("string"));
+	json_object_set_new(variableObject, "direction", json_string("IN, FOLDER_PATH"));
+	json_array_append(variableArray, variable);
+
+
+	//File_DeleteFile
+	function = json_object();
+	functionObject = json_object();
+	json_object_set_new(function, "function", functionObject);
+	json_object_set_new(functionObject, "name", json_string("File_DeleteFile"));
+	json_object_set_new(functionObject, "doc", json_string(""));
+	json_array_append(functionArray, function);
+	variableArray = json_array();
+	json_object_set_new(functionObject, "variables", variableArray);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("fileName"));
+	json_object_set_new(variableObject, "type", json_string("string"));
+	json_object_set_new(variableObject, "direction", json_string("IN, FILE_PATH"));
+	json_array_append(variableArray, variable);
+
+
+	//File_ReadBinary
+	function = json_object();
+	functionObject = json_object();
+	json_object_set_new(function, "function", functionObject);
+	json_object_set_new(functionObject, "name", json_string("File_ReadBinary"));
 	json_object_set_new(functionObject, "doc", json_string(""));
 	json_array_append(functionArray, function);
 	variableArray = json_array();
 	json_object_set_new(functionObject, "variables", variableArray);
 	variableObject = json_object();
+
 	variable = json_object();
 	json_object_set_new(variable, "variable", variableObject);
-	json_object_set_new(variableObject, "name", json_string("Binary"));
+	json_object_set_new(variableObject, "name", json_string("result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("binary"));
 	json_object_set_new(variableObject, "type", json_string("binary"));
 	json_object_set_new(variableObject, "direction", json_string("OUT"));
 	json_array_append(variableArray, variable);
 	variableObject = json_object();
 	variable = json_object();
 	json_object_set_new(variable, "variable", variableObject);
-	json_object_set_new(variableObject, "name", json_string("Name"));
+	json_object_set_new(variableObject, "name", json_string("fileName"));
 	json_object_set_new(variableObject, "type", json_string("string"));
-	json_object_set_new(variableObject, "direction", json_string("IN"));
+	json_object_set_new(variableObject, "direction", json_string("IN, FILE_PATH"));
 	json_array_append(variableArray, variable);
 
-	// File_GetString
+
+	//File_ReadString
 	function = json_object();
 	functionObject = json_object();
 	json_object_set_new(function, "function", functionObject);
-	json_object_set_new(functionObject, "name", json_string("File_GetString"));
+	json_object_set_new(functionObject, "name", json_string("File_ReadString"));
 	json_object_set_new(functionObject, "doc", json_string(""));
 	json_array_append(functionArray, function);
 	variableArray = json_array();
 	json_object_set_new(functionObject, "variables", variableArray);
 	variableObject = json_object();
+
 	variable = json_object();
 	json_object_set_new(variable, "variable", variableObject);
-	json_object_set_new(variableObject, "name", json_string("String"));
+	json_object_set_new(variableObject, "name", json_string("result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("string"));
 	json_object_set_new(variableObject, "type", json_string("string"));
 	json_object_set_new(variableObject, "direction", json_string("OUT"));
 	json_array_append(variableArray, variable);
 	variableObject = json_object();
 	variable = json_object();
 	json_object_set_new(variable, "variable", variableObject);
-	json_object_set_new(variableObject, "name", json_string("Name"));
+	json_object_set_new(variableObject, "name", json_string("fileName"));
 	json_object_set_new(variableObject, "type", json_string("string"));
-	json_object_set_new(variableObject, "direction", json_string("IN"));
+	json_object_set_new(variableObject, "direction", json_string("IN, FILE_PATH"));
 	json_array_append(variableArray, variable);
 
-	// File_ParseRequest
-	function = json_object();
-	functionObject = json_object();
-	json_object_set_new(function, "function", functionObject);
-	json_object_set_new(functionObject, "name", json_string("File_ParseRequest"));
-	json_object_set_new(functionObject, "doc", json_string(""));
-	json_array_append(functionArray, function);
-	
-	// File_Print
-	function = json_object();
-	functionObject = json_object();
-	json_object_set_new(function, "function", functionObject);
-	json_object_set_new(functionObject, "name", json_string("File_Print"));
-	json_object_set_new(functionObject, "doc", json_string(""));
-	json_array_append(functionArray, function);
-	variableArray = json_array();
-	json_object_set_new(functionObject, "variables", variableArray);
-	variableObject = json_object();
-	variable = json_object();
-	json_object_set_new(variable, "variable", variableObject);
-	json_object_set_new(variableObject, "name", json_string("String"));
-	json_object_set_new(variableObject, "type", json_string("string"));
-	json_object_set_new(variableObject, "direction", json_string("IN"));
-	json_array_append(variableArray, variable);
-	
-	// File_PrintBinary
-	function = json_object();
-	functionObject = json_object();
-	json_object_set_new(function, "function", functionObject);
-	json_object_set_new(functionObject, "name", json_string("File_PrintBinary"));
-	json_object_set_new(functionObject, "doc", json_string(""));
-	json_array_append(functionArray, function);
-	variableArray = json_array();
-	json_object_set_new(functionObject, "variables", variableArray);
-	variableObject = json_object();
-	variable = json_object();
-	json_object_set_new(variable, "variable", variableObject);
-	json_object_set_new(variableObject, "name", json_string("Binary"));
-	json_object_set_new(variableObject, "type", json_string("binary"));
-	json_object_set_new(variableObject, "direction", json_string("IN"));
-	json_array_append(variableArray, variable);
-
-	// File_PrintInfo
-	function = json_object();
-	functionObject = json_object();
-	json_object_set_new(function, "function", functionObject);
-	json_object_set_new(functionObject, "name", json_string("File_PrintInfo"));
-	json_object_set_new(functionObject, "doc", json_string(""));
-	json_array_append(functionArray, function);
-
-	// File_Println
-	function = json_object();
-	functionObject = json_object();
-	json_object_set_new(function, "function", functionObject);
-	json_object_set_new(functionObject, "name", json_string("File_Println"));
-	json_object_set_new(functionObject, "doc", json_string(""));
-	json_array_append(functionArray, function);
-	variableArray = json_array();
-	json_object_set_new(functionObject, "variables", variableArray);
-	variableObject = json_object();
-	variable = json_object();
-	json_object_set_new(variable, "variable", variableObject);
-	json_object_set_new(variableObject, "name", json_string("String"));
-	json_object_set_new(variableObject, "type", json_string("string"));
-	json_object_set_new(variableObject, "direction", json_string("IN"));
-	json_array_append(variableArray, variable);
-	
 
 	sprintf_s(str, strSize, "%s", json_dumps(root, 0));
 
