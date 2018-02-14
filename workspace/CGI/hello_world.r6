@@ -4,7 +4,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <program>
 <version>0.0.0</version>
-<functionSnMax>8</functionSnMax>
+<functionSnMax>9</functionSnMax>
 <variableSnMax>0</variableSnMax>
 <functionSnCount>3</functionSnCount>
 <variableSnCount>0</variableSnCount>
