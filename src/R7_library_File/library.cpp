@@ -79,12 +79,18 @@ static int File_DeleteDir(int r7Sn, int functionSn) {
 	char workSpacePath[R7_STRING_SIZE];
 	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
 	wchar_t workSpacePathW[R7_STRING_SIZE];
+	memset(workSpacePathW, 0 , sizeof(wchar_t) * R7_STRING_SIZE);
+	//workSpacePathW[0] = 0;
 	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
 	
 	wchar_t dirNameW[R7_STRING_SIZE];
+	memset(dirNameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
+	//dirNameW[0] = 0;
 	MultiByteToWideChar(CP_UTF8, 0, dirName, -1, dirNameW, R7_STRING_SIZE * 2);
 
 	wchar_t DirPath[R7_STRING_SIZE];
+	memset(DirPath, 0, sizeof(wchar_t) * R7_STRING_SIZE);
+	//DirPath[0] = 0;
 	wsprintf(DirPath, L"%s%s\0\0", workSpacePathW, dirNameW);
 
 	LPCWSTR p = DirPath;
