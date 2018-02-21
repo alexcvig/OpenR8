@@ -74,6 +74,7 @@ extern "C"
 	R7_API int R7_GetVariableString(int r7Sn, int functionSn, int variableNum, char *str, int strSize);
 	R7_API int R7_SetVariableString(int r7Sn, int functionSn, int variableNum, char *str);
 	R7_API int R7_GetVariableBinary(int r7Sn, int functionSn, int variableNum, void *binary, int binarySize);
+	R7_API int R7_GetVariableBinarySize(int r7Sn, int functionSn, int variableNum);
 	R7_API int R7_SetVariableBinary(int r7Sn, int functionSn, int variableNum, void *binary, int binarySize);
 	R7_API int R7_GetVariableInt(int r7Sn, int functionSn, int variableNum, int *variableValue);
 	R7_API int R7_SetVariableInt(int r7Sn, int functionSn, int variableNum, int variableValue);

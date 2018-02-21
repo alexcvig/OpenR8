@@ -1,12 +1,12 @@
-#R7
+#!R7
 # -*- coding: utf-8 -*-
-# R7 version 18.7.0
+# R7 version 18.8.0
 <?xml version="1.0" encoding="utf-8"?>
 <program>
 <version>0.0.0</version>
-<functionSnMax>13</functionSnMax>
+<functionSnMax>14</functionSnMax>
 <variableSnMax>15</variableSnMax>
-<functionSnCount>13</functionSnCount>
+<functionSnCount>14</functionSnCount>
 <variableSnCount>15</variableSnCount>
 <functions>
 <function>
@@ -141,6 +141,14 @@
 <variableSn>3</variableSn>
 <variableSn>2</variableSn>
 <variableSn>15</variableSn>
+</function>
+<function>
+<sn>14</sn>
+<name>Debug_Image</name>
+<posY>14</posY>
+<enable>1</enable>
+<remark></remark>
+<variableSn>2</variableSn>
 </function>
 </functions>
 <variables>
