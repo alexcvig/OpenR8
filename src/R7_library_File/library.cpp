@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) 2004-2018 Open Robot Club. All rights reserved.
 File library for R7.
 */
@@ -15,7 +15,6 @@ extern "C"
 {
 #endif
 
-
 	
 static int File_DeleteFile(int r7Sn, int functionSn) {
 
@@ -28,12 +27,15 @@ static int File_DeleteFile(int r7Sn, int functionSn) {
 	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
 
 	wchar_t workSpacePathW[R7_STRING_SIZE];
+	memset(workSpacePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
 	
 	wchar_t fileNameW[R7_STRING_SIZE];
+	memset(fileNameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
 
 	wchar_t filePathW[R7_STRING_SIZE];
+	memset(filePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	wsprintf(filePathW, L"%s%s\0\0", workSpacePathW, fileNameW);
 
 	HANDLE file = CreateFile(filePathW, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
@@ -78,20 +80,18 @@ static int File_DeleteDir(int r7Sn, int functionSn) {
 
 	char workSpacePath[R7_STRING_SIZE];
 	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+	
 	wchar_t workSpacePathW[R7_STRING_SIZE];
-	memset(workSpacePathW, 0 , sizeof(wchar_t) * R7_STRING_SIZE);
-	//workSpacePathW[0] = 0;
+	memset(workSpacePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
 	
 	wchar_t dirNameW[R7_STRING_SIZE];
 	memset(dirNameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
-	//dirNameW[0] = 0;
 	MultiByteToWideChar(CP_UTF8, 0, dirName, -1, dirNameW, R7_STRING_SIZE * 2);
 
-	wchar_t DirPath[R7_STRING_SIZE];
+	wchar_t DirPath[R7_STRING_SIZE] = L"";
 	memset(DirPath, 0, sizeof(wchar_t) * R7_STRING_SIZE);
-	//DirPath[0] = 0;
-	wsprintf(DirPath, L"%s%s\0\0", workSpacePathW, dirNameW);
+	wsprintf(DirPath, L"%s%s", workSpacePathW, dirNameW);
 
 	LPCWSTR p = DirPath;
 	DWORD ftyp = GetFileAttributesW(p);
@@ -101,7 +101,7 @@ static int File_DeleteDir(int r7Sn, int functionSn) {
 		R7_SetVariableInt(r7Sn, functionSn, 1, -2);
 		return 1;
 	}
-
+	
 	SHFILEOPSTRUCT dDir;
 
 	memset(&dDir, 0, sizeof(SHFILEOPSTRUCT));
@@ -121,7 +121,7 @@ static int File_DeleteDir(int r7Sn, int functionSn) {
 		//printf("remove folder fail\n");
 	}
 
-	R7_SetVariableInt(r7Sn, functionSn, 2, result2);
+	R7_SetVariableInt(r7Sn, functionSn, 1, result2);
 	return 1;
 }
 
@@ -135,12 +135,15 @@ static int File_ReadImage(int r7Sn, int functionSn) {
 	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
 
 	wchar_t fileNameW[R7_STRING_SIZE];
+	memset(fileNameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
 	
 	wchar_t WorkSpacePathW[R7_STRING_SIZE];
+	memset(WorkSpacePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, WorkSpacePathW, R7_STRING_SIZE * 2);
 	
 	wchar_t FilePathW[R7_STRING_SIZE];
+	memset(FilePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	wsprintf(FilePathW, L"%s%s", WorkSpacePathW, fileNameW);
 
 	HANDLE file = CreateFile(FilePathW, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
@@ -196,27 +199,51 @@ static int File_ReadImage(int r7Sn, int functionSn) {
 static int File_SaveImage(int r7Sn, int functionSn) {
 	// TODO
 
-	//Mat inputMat = Mat();
-	//R7_SetVariableMat(r7Sn, functionSn, 2, inputMat);
-	//char inPutFileString[R7_STRING_SIZE];
-	//R7_GetVariableString(r7Sn, functionSn, 3, inPutFileString, R7_STRING_SIZE);
+	cv::Mat image = cv::Mat();
+	R7_SetVariableMat(r7Sn, functionSn, 2, image);
+	char fileName[R7_STRING_SIZE];
+	R7_GetVariableString(r7Sn, functionSn, 3, fileName, R7_STRING_SIZE);
 
-	//char workSpacePath[R7_STRING_SIZE];
-	//R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+	char workSpacePath[R7_STRING_SIZE];
+	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
 
 
-	//wchar_t fileNameW[R7_STRING_SIZE];
-	//MultiByteToWideChar(CP_UTF8, 0, inPutFileString, -1, fileNameW, R7_STRING_SIZE * 2);
-	////printf("%ls", fileNameW);
+	wchar_t fileNameW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
 
-	//wchar_t WorkSpacePathW[R7_STRING_SIZE];
-	//MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, WorkSpacePathW, R7_STRING_SIZE * 2);
-	////printf("%ls", WorkSpacePathW);
+	wchar_t WorkSpacePathW[R7_STRING_SIZE];
+	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, WorkSpacePathW, R7_STRING_SIZE * 2);
 
-	//wchar_t FilePathW[R7_STRING_SIZE] = L"";
-	//wsprintf(FilePathW, L"%s%s", WorkSpacePathW, fileNameW);
-	////printf("%ls", FilePathW);
+	wchar_t FilePathW[R7_STRING_SIZE];
+	wsprintf(FilePathW, L"%s%s", WorkSpacePathW, fileNameW);
 
+
+	DWORD ftyp = GetFileAttributesW(FilePathW);
+	if (ftyp == INVALID_FILE_ATTRIBUTES) {
+		//printf("Dir does not exist!\n");
+		R7_SetVariableInt(r7Sn, functionSn, 1, -2);
+		return 1;
+	}
+
+
+	char *path = "c:/renjingwei/ren/jing/wei/wo/张信哲--白月光.mp3";
+	char drive[5];
+	char dir[100];
+	char filename[100];
+	char fileext[10];
+	_splitpath(path, drive, dir, filename, fileext);
+	cout << "filepath: " << path << endl;
+	cout << "drive: " << drive << endl;
+	cout << "dir: " << dir << endl;
+	cout << "filename: " << filename << endl;
+	cout << "fileext: " << fileext << endl;
+
+	//_wsplitpath(*w, drive, dir, fname, ext);
+
+
+	//_wsplitpath(FilePathW, NULL, 0, NULL, 0, NULL, 0, strExt, _MAX_EXT);
+
+	imwrite("result.jpg", image);// 
 	//HANDLE pFile = CreateFile(FilePathW, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	//if (pFile == INVALID_HANDLE_VALUE)
 	//{
@@ -238,12 +265,12 @@ static int File_SaveImage(int r7Sn, int functionSn) {
 
 	//return TRUE;
 
-	//R7_SetVariableInt(r7Sn, functionSn, 1, 0);
+	R7_SetVariableInt(r7Sn, functionSn, 1, 0);
 
 	return 1;
 }
 
-int File_ReadString(int r7Sn, int functionSn) {
+static int File_ReadString(int r7Sn, int functionSn) {
 	//result
 	//return -1:file name is NULL
 	//return -2:file is not exist
@@ -251,14 +278,15 @@ int File_ReadString(int r7Sn, int functionSn) {
 	int result = 0;
 
 	//output
-	//char string[R7_STRING_SIZE];
+	char *string;
 	//intput
 	char fileName[R7_STRING_SIZE];
 	R7_GetVariableString(r7Sn, functionSn, 3, fileName, R7_STRING_SIZE);
 
 	if (fileName[0] == '\0') {
-//		R7_Printf(r7Sn, "\nERROR! fileName\n");
+		//R7_Printf(r7Sn, "\nERROR! fileName\n");
 		result = -1;
+		R7_SetVariableInt(r7Sn, functionSn, 1, result);
 		return -1;
 	}
 
@@ -266,12 +294,15 @@ int File_ReadString(int r7Sn, int functionSn) {
 	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
 
 	wchar_t workSpacePathW[R7_STRING_SIZE];
+	memset(workSpacePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
-	
+
 	wchar_t fileNameW[R7_STRING_SIZE];
+	memset(fileNameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
 
 	wchar_t filePathW[R7_STRING_SIZE];
+	memset(filePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	wsprintf(filePathW, L"%s%s\0", workSpacePathW, fileNameW);
 
 	HANDLE hDstFile;
@@ -282,22 +313,24 @@ int File_ReadString(int r7Sn, int functionSn) {
 			CloseHandle(hDstFile);
 			//R7_Printf(r7Sn, "\nERROR! fileName is not exist\n");
 			result = -2;
+			R7_SetVariableInt(r7Sn, functionSn, 1, result);
 			return -2;
 		}
 	}
 
 	result = GetFileSize(hDstFile, NULL);
-	char *string, *tmpBuf;
+	char *string1, *tmpBuf;
 	DWORD dwBytesToRead, dwBytesRead;
-	string = (char *)malloc(result + 1);
-	//ZeroMemory(buffer, result);
+	string1 = (char *)malloc(result + 1);
+	//ZeroMemory(string, result + 1);
 
 	dwBytesToRead = result;
 	dwBytesRead = 0;
-	tmpBuf = string;
 
+	tmpBuf = string1;
 	do {
-		ReadFile(hDstFile, tmpBuf, dwBytesToRead, &dwBytesRead, NULL);
+		ReadFile(hDstFile, string1, dwBytesToRead, &dwBytesRead, NULL);
+
 		if (dwBytesRead == 0) {
 			break;
 		}
@@ -306,17 +339,109 @@ int File_ReadString(int r7Sn, int functionSn) {
 		tmpBuf += dwBytesRead;
 
 	} while (dwBytesToRead > 0);
-	
+
 	CloseHandle(hDstFile);
-	
-	string[result] = '\0';
-	
+
+	//some utf 8 file in the first will add BOM，this BOM make first string having spece
+	if (string1[0] == '\xEF' && string1[1] == '\xBB' && string1[2] == '\xBF') {
+		result -= 3;
+		string = (char *)malloc(result + 1 - 3);
+		char *tempStr = &string1[3];
+		strncpy(string, tempStr, result);
+		string[result] = '\0';
+	}
+	else {
+		string1[result] = '\0';
+		string = string1;
+	}
+
 	// TODO: Detect string encoding format. Then convert to UTF-8.
-	
+
 	R7_SetVariableInt(r7Sn, functionSn, 1, result);
 	R7_SetVariableString(r7Sn, functionSn, 2, string); // UTF-8
 
-	free(string);
+	free(string1);
+
+	return 1;
+}
+
+static int File_SaveString(int r7Sn, int functionSn) {
+	//result
+	//return -1:file name is NULL
+	//return -2:fileName  is not exist
+	int result = 0;
+
+	//input
+	char string[R7_STRING_SIZE];
+	R7_GetVariableString(r7Sn, functionSn, 2, string, R7_STRING_SIZE);
+	//intput
+	char fileName[R7_STRING_SIZE];
+	R7_GetVariableString(r7Sn, functionSn, 3, fileName, R7_STRING_SIZE);
+
+	if (fileName[0] == '\0') {
+		//R7_Printf(r7Sn, "\nERROR! fileName\n");
+		result = -1;
+		R7_SetVariableInt(r7Sn, functionSn, 1, result);
+		return -1;
+	}
+
+	char workSpacePath[R7_STRING_SIZE];
+	R7_GetWorkspacePath(r7Sn, workSpacePath, R7_STRING_SIZE);
+
+	wchar_t workSpacePathW[R7_STRING_SIZE];
+	memset(workSpacePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
+	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
+
+	wchar_t fileNameW[R7_STRING_SIZE];
+	memset(fileNameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
+	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
+
+	wchar_t filePathW[R7_STRING_SIZE];
+	memset(filePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
+	wsprintf(filePathW, L"%s%s\0", workSpacePathW, fileNameW);
+
+	//check path exist 
+	//CREATE_NEW : create file ,if exist will return -1
+	//CREATE_ALWAYS : create file , if exist will cover
+	//OPEN_EXISTING : create file, if not exist will return -1
+	HANDLE hDstFile;
+	hDstFile = CreateFile(filePathW, GENERIC_WRITE | GENERIC_READ, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hDstFile == INVALID_HANDLE_VALUE) {
+		hDstFile = CreateFile(fileNameW, GENERIC_WRITE | GENERIC_READ, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (hDstFile == INVALID_HANDLE_VALUE) {
+			CloseHandle(hDstFile);
+			//R7_Printf(r7Sn, "\nERROR! fileName is not exist\n");
+			result = -2;
+			R7_SetVariableInt(r7Sn, functionSn, 1, result);
+			return -2;
+		}
+	}
+
+	result = (int)strlen(string);
+	char *string1;
+	DWORD dwBytesToWrite, dwBytesWrite;
+	string1 = (char *)malloc(result + 1);
+	dwBytesToWrite = result;
+	dwBytesWrite = 0;
+
+	string1 = string;
+
+	do {
+		WriteFile(hDstFile, &string, result, &dwBytesWrite, NULL);
+		dwBytesToWrite -= dwBytesWrite;
+		string1 += dwBytesWrite;
+
+	} while (dwBytesToWrite > 0);
+
+	CloseHandle(hDstFile);
+
+	// TODO: Detect string encoding format. Then convert to UTF-8.
+
+	R7_SetVariableInt(r7Sn, functionSn, 1, result);
+
+	//free(string1);
+	//free(string);
+
 
 	return 1;
 }
@@ -338,6 +463,7 @@ static int File_ReadBinary(int r7Sn, int functionSn) {
 	if (fileName[0] == '\0') {
 		//R7_Printf(r7Sn, "\nERROR! fileName\n");
 		result = -1;
+		R7_SetVariableInt(r7Sn, functionSn, 1, result);
 		return -1;
 	}
 
@@ -347,12 +473,15 @@ static int File_ReadBinary(int r7Sn, int functionSn) {
 
 	//recipe path wchar_t
 	wchar_t workSpacePathW[R7_STRING_SIZE];
+	memset(workSpacePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, workSpacePath, -1, workSpacePathW, R7_STRING_SIZE * 2);
-	
+
 	wchar_t fileNameW[R7_STRING_SIZE];
+	memset(fileNameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	MultiByteToWideChar(CP_UTF8, 0, fileName, -1, fileNameW, R7_STRING_SIZE * 2);
 
 	wchar_t filePathW[R7_STRING_SIZE];
+	memset(filePathW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
 	wsprintf(filePathW, L"%s%s\0", workSpacePathW, fileNameW);
 
 	HANDLE hDstFile;
@@ -363,6 +492,7 @@ static int File_ReadBinary(int r7Sn, int functionSn) {
 			CloseHandle(hDstFile);
 			//R7_Printf(r7Sn, "\nERROR! fileName is not exist\n");
 			result = -2;
+			R7_SetVariableInt(r7Sn, functionSn, 1, result);
 			return -2;
 		}
 	}
@@ -392,6 +522,8 @@ static int File_ReadBinary(int r7Sn, int functionSn) {
 	R7_SetVariableInt(r7Sn, functionSn, 1, result);
 	R7_SetVariableBinary(r7Sn, functionSn, 2, binary, result);
 
+	free(binary);
+
 	return 1;
 }
 
@@ -405,6 +537,7 @@ R7_API int R7Library_Init(void) {
 	R7_RegisterFunction("File_SaveImage", (R7Function_t)&File_SaveImage);
 	R7_RegisterFunction("File_ReadBinary", (R7Function_t)&File_ReadBinary);
 	R7_RegisterFunction("File_ReadString", (R7Function_t)&File_ReadString);
+	R7_RegisterFunction("File_SaveString", (R7Function_t)&File_SaveString);
 	R7_RegisterFunction("File_DeleteDir", (R7Function_t)&File_DeleteDir);
 	R7_RegisterFunction("File_DeleteFile", (R7Function_t)&File_DeleteFile);
 		
@@ -455,6 +588,40 @@ R7_API int R7Library_GetSupportList(char *str, int strSize) {
 	json_array_append(functionArray, function);
 	variableArray = json_array();
 	json_object_set_new(functionObject, "variables", variableArray);	
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("Image"));
+	json_object_set_new(variableObject, "type", json_string("image"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("fileName"));
+	json_object_set_new(variableObject, "type", json_string("string"));
+	json_object_set_new(variableObject, "direction", json_string("IN, FILE_PATH"));
+	json_array_append(variableArray, variable);
+
+	//File_SaveImage
+	function = json_object();
+	functionObject = json_object();
+	json_object_set_new(function, "function", functionObject);
+	json_object_set_new(functionObject, "name", json_string("File_SaveImage"));
+	json_object_set_new(functionObject, "doc", json_string(""));
+	json_array_append(functionArray, function);
+	variableArray = json_array();
+	json_object_set_new(functionObject, "variables", variableArray);
 
 	variableObject = json_object();
 	variable = json_object();
@@ -590,6 +757,38 @@ R7_API int R7Library_GetSupportList(char *str, int strSize) {
 	json_object_set_new(variableObject, "name", json_string("string"));
 	json_object_set_new(variableObject, "type", json_string("string"));
 	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("fileName"));
+	json_object_set_new(variableObject, "type", json_string("string"));
+	json_object_set_new(variableObject, "direction", json_string("IN, FILE_PATH"));
+	json_array_append(variableArray, variable);
+
+	//File_SaveString
+	function = json_object();
+	functionObject = json_object();
+	json_object_set_new(function, "function", functionObject);
+	json_object_set_new(functionObject, "name", json_string("File_SaveString"));
+	json_object_set_new(functionObject, "doc", json_string(""));
+	json_array_append(functionArray, function);
+	variableArray = json_array();
+	json_object_set_new(functionObject, "variables", variableArray);
+	variableObject = json_object();
+
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("string"));
+	json_object_set_new(variableObject, "type", json_string("string"));
+	json_object_set_new(variableObject, "direction", json_string("IN"));
 	json_array_append(variableArray, variable);
 	variableObject = json_object();
 	variable = json_object();

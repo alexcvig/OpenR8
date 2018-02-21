@@ -52,8 +52,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\3rdparty\tinyxml2-win64\Release;$(SolutionDir)..\..\3rdparty\wxWidgets-3.1.0-win64\lib\vc_x64_lib;$(SolutionDir)..\..\3rdparty\opencv-3.3.0-win64\lib;$(SolutionDir)..\..\3rdparty\jansson-2.9-win64\lib\Release;$(SolutionDir)..\..\lib;$(SolutionDir)..\..\3rdparty\opengl-win64\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>delayimp.lib;opencv_world330.lib;jansson.lib;tinyxml2.lib;opengl32.lib;iphlpapi.lib;wxbase31u.lib;wxbase31u_net.lib;wxbase31u_xml.lib;wxexpat.lib;wxjpeg.lib;wxmsw31u_adv.lib;wxmsw31u_aui.lib;wxmsw31u_core.lib;wxmsw31u_gl.lib;wxmsw31u_html.lib;wxmsw31u_media.lib;wxmsw31u_propgrid.lib;wxmsw31u_qa.lib;wxmsw31u_ribbon.lib;wxmsw31u_richtext.lib;wxmsw31u_stc.lib;wxmsw31u_webview.lib;wxmsw31u_xrc.lib;wxpng.lib;wxregexu.lib;wxscintilla.lib;wxtiff.lib;wxzlib.lib;R7_lib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)$(Platform)\$(Configuration)\File.dll" "$(SolutionDir)..\..\library\File\File.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="library.cpp" />
