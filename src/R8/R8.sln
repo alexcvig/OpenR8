@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R8_app", "R8_app\R8_app.csproj", "{BC17A4B7-70D1-46FA-B960-3D599B6D8C13}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "R8_lib", "R8_lib\R8_lib.vcxproj", "{5ADE43EC-5B1A-441D-992B-EF21F459E7F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC17A4B7-70D1-46FA-B960-3D599B6D8C13}.Release|x64.ActiveCfg = Release|x64
+		{BC17A4B7-70D1-46FA-B960-3D599B6D8C13}.Release|x64.Build.0 = Release|x64
+		{BC17A4B7-70D1-46FA-B960-3D599B6D8C13}.Release|x86.ActiveCfg = Release|x86
+		{BC17A4B7-70D1-46FA-B960-3D599B6D8C13}.Release|x86.Build.0 = Release|x86
+		{5ADE43EC-5B1A-441D-992B-EF21F459E7F3}.Release|x64.ActiveCfg = Release|x64
+		{5ADE43EC-5B1A-441D-992B-EF21F459E7F3}.Release|x64.Build.0 = Release|x64
+		{5ADE43EC-5B1A-441D-992B-EF21F459E7F3}.Release|x86.ActiveCfg = Release|Win32
+		{5ADE43EC-5B1A-441D-992B-EF21F459E7F3}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
