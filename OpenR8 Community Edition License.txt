@@ -1,11 +1,11 @@
-﻿OpenR8 Community Edition License
+OpenR8 Community Edition License
 
 Copyright © 2004-2018 Open Robot Club. All Rights Reserved.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-This Community Edition is only for non-commercial application.
+This Community Edition is only for non-commercial applications.
 
-For commercial application, please contact us to purchase Professional Edition License or Enterprise Edition License.
+For commercial applications, please contact us to purchase Professional Edition License or Enterprise Edition License.
 Email: openrobot@openrobot.club
 Website: http://www.openrobot.club
