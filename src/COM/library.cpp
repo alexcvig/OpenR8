@@ -496,8 +496,8 @@ R7_API int R7Library_GetSupportList(char *str, int strSize) {
 	json_t *function;
 	json_t *functionObject;
 	json_t *variableArray;
-	json_t *variable;
-	json_t *variableObject;
+	//json_t *variable;
+	//json_t *variableObject;
 
 	functionGroupArray = json_array();
 	json_object_set_new(root, "functionGroups", functionGroupArray);

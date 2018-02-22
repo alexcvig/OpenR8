@@ -52,6 +52,9 @@
       <AdditionalDependencies>opencv_world330.lib;jansson.lib;R7_lib.lib</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)$(Platform)\$(Configuration)\OpenCV.dll" "$(SolutionDir)..\..\library\OpenCV\OpenCV.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="library.cpp" />

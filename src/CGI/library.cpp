@@ -5,7 +5,7 @@ CGI library for R7.
 
 
 #include "R7.hpp"
-
+#include <tchar.h>
 
 using namespace std;
 
@@ -31,14 +31,28 @@ static int CGI_GetBinary(int r7Sn, int functionSn) {
 
 
 static int CGI_GetString(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
+	char name[R7_STRING_SIZE];
+	R7_GetVariableString(r7Sn, functionSn, 3, name, R7_STRING_SIZE);
 
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
+	wchar_t nameW[R7_STRING_SIZE];
+	memset(nameW, 0, sizeof(wchar_t) * R7_STRING_SIZE);
+	MultiByteToWideChar(CP_UTF8, 0, name, -1, nameW, R7_STRING_SIZE * 2);
+
+	wchar_t *nameGetW;
+	nameGetW = _wgetenv(nameW);
+
+	char nameGet[R7_STRING_SIZE];
+	WideCharToMultiByte(CP_UTF8, 0, nameGetW, -1, nameGet, R7_STRING_SIZE * 2, NULL, NULL);
+
+	int result = int(strlen(nameGet));
+
+	if (result < 1) {
+		R7_Log(R7_ERROR, __FUNCTION__, "nameGet < 1");
+		return 1;
 	}
+
+	R7_SetVariableInt(r7Sn, functionSn, 1, result);
+	R7_SetVariableString(r7Sn, functionSn, 2, nameGet);
 
 	return 1;
 }
@@ -57,7 +71,6 @@ static int CGI_ParseRequest(int r7Sn, int functionSn) {
 
 	return 1;
 }
-
 
 static int CGI_Print(int r7Sn, int functionSn) {
 	int res;
@@ -88,17 +101,50 @@ static int CGI_PrintBinary(int r7Sn, int functionSn) {
 
 
 static int CGI_PrintInfo(int r7Sn, int functionSn) {
-	int res;
-	void *variableObject = NULL;
+	int i = 1;	//extern wchar_t **_wenviron;
+	wchar_t *s = *_wenviron;
 
-	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -2;
+	for (; s; i++) {
+		char nameGet[R7_STRING_SIZE];
+		WideCharToMultiByte(CP_UTF8, 0, s, -1, nameGet, R7_STRING_SIZE * 2, NULL, NULL);
+		R7_Printf(r7Sn, "%s<br>", nameGet);
+		s = *(_wenviron + i);
 	}
 
 	return 1;
 }
+
+
+//static int CGI_PrintInfo(int r7Sn, int functionSn) {
+//	/*int res;
+//	void *variableObject = NULL;
+//
+//	res = R7_GetVariableObject(r7Sn, functionSn, 1, &variableObject);
+//	if (res <= 0) {
+//	R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
+//	return -2;
+//	}*/
+//	LPTSTR lpszVariable;
+//	LPTCH lpvEnv;
+//
+//	lpvEnv = GetEnvironmentStrings();
+//
+//	if (lpvEnv == NULL) {
+//		//printf("GetEnvironmentStrins failed(%d)/n", GetLastError());
+//		return 1;
+//	}
+//
+//	lpszVariable = (LPTSTR)lpvEnv;
+//
+//	while (*lpszVariable) {
+//		/*_tprintf(TEXT("%s/n"), lpszVariable);*/
+//		//printf("%ls", lpszVariable);
+//		lpszVariable += lstrlen(lpszVariable) + 1;
+//	}
+//
+//	FreeEnvironmentStrings(lpvEnv);
+//	return 1;
+//}
 
 
 static int CGI_Println(int r7Sn, int functionSn) {
@@ -197,6 +243,13 @@ R7_API int R7Library_GetSupportList(char *str, int strSize) {
 	json_array_append(functionArray, function);
 	variableArray = json_array();
 	json_object_set_new(functionObject, "variables", variableArray);
+	variableObject = json_object();
+	variable = json_object();
+	json_object_set_new(variable, "variable", variableObject);
+	json_object_set_new(variableObject, "name", json_string("Result"));
+	json_object_set_new(variableObject, "type", json_string("int"));
+	json_object_set_new(variableObject, "direction", json_string("OUT"));
+	json_array_append(variableArray, variable);
 	variableObject = json_object();
 	variable = json_object();
 	json_object_set_new(variable, "variable", variableObject);

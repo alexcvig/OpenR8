@@ -52,6 +52,9 @@
       <AdditionalDependencies>opencv_world330.lib;jansson.lib;R7_lib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)$(Platform)\$(Configuration)\Timer.dll" "$(SolutionDir)..\..\library\Timer\Timer.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\R7.hpp" />

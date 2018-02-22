@@ -1,0 +1,68 @@
+#!R7
+# -*- coding: utf-8 -*-
+# R7 version 18.8.0
+<?xml version="1.0" encoding="utf-8"?>
+<program>
+<version>0.0.0</version>
+<functionSnMax>6</functionSnMax>
+<variableSnMax>1</variableSnMax>
+<functionSnCount>4</functionSnCount>
+<variableSnCount>1</variableSnCount>
+<functions>
+<function>
+<sn>1</sn>
+<name>Println</name>
+<posY>1</posY>
+<enable>1</enable>
+<remark>Content-Type:text/html; charset=utf-8</remark>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+</function>
+<function>
+<sn>3</sn>
+<name>Println</name>
+<posY>3</posY>
+<enable>1</enable>
+<remark>Hello World2</remark>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+</function>
+<function>
+<sn>4</sn>
+<name>CGI_PrintInfo</name>
+<posY>4</posY>
+<enable>1</enable>
+<remark></remark>
+</function>
+<function>
+<sn>6</sn>
+<name>Println</name>
+<posY>2</posY>
+<enable>1</enable>
+<remark></remark>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+<variableSn>0</variableSn>
+</function>
+</functions>
+<variables>
+<variable>
+<sn>1</sn>
+<name>String</name>
+<type>string</type>
+<value>中文  測試 123</value>
+<remark></remark>
+</variable>
+</variables>
+</program>
