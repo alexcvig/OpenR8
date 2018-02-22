@@ -53,7 +53,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)$(Platform)\$(Configuration)\COM.dll" "$(SolutionDir)..\..\library\COM-disabled\COM.dll"</Command>
+      <Command>copy "$(SolutionDir)$(Platform)\$(Configuration)\COM.dll" "$(SolutionDir)..\..\library\COM\COM.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

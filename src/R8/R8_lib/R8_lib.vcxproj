@@ -142,28 +142,7 @@ copy "$(SolutionDir)..\..\AOI_3rdparty\opencv-3.2.0-win32\bin\Release\opencv_wor
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)R8_lib\x64\Release\R8_lib.dll" "$(SolutionDir)R8_app\bin\x64\Release\R8_lib.dll"
-copy "$(SolutionDir)R8_lib\x64\Release\R8_lib.dll" "$(SolutionDir)..\..\R8_lib.dll"
-copy "$(SolutionDir)..\..\R7.exe" "$(SolutionDir)R8_app\bin\x64\Release\R7.exe"
-copy "$(SolutionDir)..\..\R7_lib.dll" "$(SolutionDir)R8_app\bin\x64\Release\R7_lib.dll"
-copy "$(SolutionDir)..\..\lib\R7_lib.lib" "$(SolutionDir)R8_app\bin\x64\Release\R7_lib.lib"
-copy "$(SolutionDir)..\..\opencv_world330.dll" "$(SolutionDir)R8_app\bin\x64\Release\opencv_world330.dll"
-copy "$(SolutionDir)..\..\opencv_world330.dll" "$(SolutionDir)R8_app\bin\x64\Release\opencv_world330.dll"
-copy "$(SolutionDir)..\..\wxbase31u_net_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxbase31u_net_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxbase31u_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxbase31u_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxbase31u_xml_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxbase31u_xml_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_adv_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_adv_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_aui_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_aui_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_core_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_core_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\\wxmsw31u_gl_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_gl_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_html_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_html_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_media_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_media_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_propgrid_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_propgrid_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_qa_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_qa_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_ribbon_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_ribbon_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_richtext_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_richtext_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_stc_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_stc_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_webview_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_webview_vc_x64_custom.dll"
-copy "$(SolutionDir)..\..\wxmsw31u_xrc_vc_x64_custom.dll" "$(SolutionDir)R8_app\bin\x64\Release\wxmsw31u_xrc_vc_x64_custom.dll"</Command>
+copy "$(SolutionDir)R8_lib\x64\Release\R8_lib.dll" "$(SolutionDir)..\..\R8_lib.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

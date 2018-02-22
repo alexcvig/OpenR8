@@ -57,10 +57,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)..\..\R7_lib.dll" "$(SolutionDir)x64\Release\R7_lib.dll"
-copy "$(SolutionDir)..\..\opencv_world330.dll" "$(SolutionDir)x64\Release\opencv_world330.dll"
-xcopy  "$(SolutionDir)..\..\library" "$(SolutionDir)x64\Release\library" /e /i /y /d
-xcopy  "$(SolutionDir)..\..\source" "$(SolutionDir)x64\Release\source" /e /i /y /d</Command>
+      <Command>copy "$(SolutionDir)x64\Release\template.exe" "$(SolutionDir)..\..\template.exe" 
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
