@@ -20,15 +20,15 @@ For commercial applications, please contact us to purchase Professional Edition 
 Contact Email: openrobot@openrobot.club  
 Website: http://www.openrobot.club  
 
-To cite OpenR8 in publications, please use:
+To cite OpenR8 in publications, please use:  
 Open Robot Club (2017). OpenR8: AI Software for Everyone. Open Robot Club, Taipei, Taiwan. URL: https://www.openrobot.club/.
 
-A BibTeX entry for LaTeX users is
-  @Manual{,
-    title = {OpenR8: AI Software for Everyone.},
-    author = {{Open Robot Club}},
-    organization = {Open Robot Club},
-    address = {Taipei, Taiwan},
-    year = {2017},
-    url = {https://www.openrobot.club/},
-  }
+A BibTeX entry for LaTeX users is  
+  @Manual{,  
+    title = {OpenR8: AI Software for Everyone.},  
+    author = {{Open Robot Club}},  
+    organization = {Open Robot Club},  
+    address = {Taipei, Taiwan},  
+    year = {2017},  
+    url = {https://www.openrobot.club/},  
+  }  
