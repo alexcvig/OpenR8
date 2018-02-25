@@ -84,7 +84,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(297, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "This Community Edition is for non-commercial application only.";
+            this.label1.Text = "This Community Edition is only for non-commercial application.";
             // 
             // label2
             // 

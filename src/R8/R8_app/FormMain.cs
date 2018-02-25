@@ -218,7 +218,7 @@ namespace R8
             versionSB.Clear();
 
 
-            formMainTitle = "OpenR8 Community Edition  -  AI Software for Everyone  -  Version " + version;
+            formMainTitle = "OpenR8 Community Edition  -  AI Tool for Everyone  -  Version " + version;
             this.Text = formMainTitle;
 
 
