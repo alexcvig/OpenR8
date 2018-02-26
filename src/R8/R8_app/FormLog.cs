@@ -13,6 +13,7 @@ namespace R8
     public partial class FormLog : Form
     {
         private FormMain formMain;
+        private string str_Log = "Log";
         public FormLog()
         {
             InitializeComponent();
@@ -23,6 +24,9 @@ namespace R8
             richTextBox1.Height = this.ClientSize.Height - 15;
             richTextBox1.Width = this.ClientSize.Width - 15 - buttonClear.Width;
             formMain = (FormMain)this.MdiParent;
+
+            str_Log = R8.TranslationString(str_Log);
+            this.Text = str_Log;
         }
         public RichTextBox getRichTextBox() {
             return richTextBox1;

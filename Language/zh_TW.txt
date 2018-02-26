@@ -13,5 +13,13 @@
   "Save As": "另存",
   "Export": "匯出",
   "Exit": "離開",
-  "Language": "切換語系"
+  "Language": "切換語系",
+  "Program Functions": "函式",
+  "Libraries": "函式庫",
+  "Function": "函式設定",
+  "Variable": "變數設定",
+  "Log": "輸出",
+  "Program Variables": "程式變數",
+  "Community Edition": "社群版",
+  "AI Tool for Everyone": "所有人皆可使用的AI工具"
 }

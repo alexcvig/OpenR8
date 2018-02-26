@@ -9,8 +9,11 @@ using System.Windows.Forms;
 
 namespace R8
 {
+
+    
     public partial class FormLibrary : Form
     {
+        private string str_Libraries = "Libraries";
 
         public static Dictionary<string, string> functionURL = new Dictionary<string, string>();
         private List<Button> buttons = new List<Button>();
@@ -45,6 +48,9 @@ namespace R8
             this.panel2.TabIndex = 1;
             this.Controls.Add(this.panel2);
             InitializeComponent();
+
+            str_Libraries = R8.TranslationString(str_Libraries);
+            this.Text = str_Libraries;
         }
 
         private void FormToolBox_Load(object sender, EventArgs e)
@@ -52,7 +58,7 @@ namespace R8
             formMain = (FormMain)this.MdiParent;
             FormLibrary_SizeChanged(sender, e);
             loadButtons();
-            this.Text = "Libraries  " + buttons.Count + " of " + allFunctionCount;
+            this.Text = str_Libraries + "  " + buttons.Count + " of " + allFunctionCount;
         }
 
         private void loadButtons()
@@ -267,7 +273,7 @@ namespace R8
             }
             str.Clear();
             str2.Clear();
-            this.Text = "Libraries  " + buttons.Count + " of " + allFunctionCount;
+            this.Text = str_Libraries + "  " + buttons.Count + " of " + allFunctionCount;
             return;
         }
 

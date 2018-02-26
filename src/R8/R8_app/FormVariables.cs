@@ -32,6 +32,7 @@ namespace R8
 
 
         private R8.PanelNoScrollOnFocus panel2;
+        private string str_Variables = "Program Variables";
 
         public FormVariables()
         {
@@ -48,6 +49,9 @@ namespace R8
         {
             formMain = (FormMain)this.MdiParent;
             FormVariables_SizeChanged(sender, e);
+
+            str_Variables = R8.TranslationString(str_Variables);
+            this.Text = str_Variables;
         }
 
 
@@ -345,7 +349,7 @@ namespace R8
             //buttonShowAll.Text = "" + targetVariableCount + " of " + FormMain.r8.getVariablesCount() + " variables";
             //this.Text = "Variables " + targetVariableCount + " of " + FormMain.r8.getVariablesCount();
             //20170327 視窗 Variables 改 title 為 Variables。
-            this.Text = "Program Variables  " + targetVariableCount + " of " + FormMain.r8.getVariablesCount();
+            this.Text = str_Variables +"  " + targetVariableCount + " of " + FormMain.r8.getVariablesCount();
             return;
         }
 

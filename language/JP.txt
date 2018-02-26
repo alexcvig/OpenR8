@@ -1,0 +1,25 @@
+﻿{
+  "File": "ファイル", 
+  "Undo": "元に戻す", 
+  "Redo": "やり直し", 
+  "Library": "としょうかん", 
+  "Workspace": "作業経路",
+  "Release": "リリース",
+  "Debug": "デバッグ",
+  "About": "について",
+  "New": "追加された", 
+  "Open": "開いた", 
+  "Save": "セーブ",
+  "Save As": "新しいファイルを保存する",
+  "Export": "輸出する",
+  "Exit": "離れる",
+  "Language": "言語"
+  "Program Functions": "プログラム",
+  "Libraries": "機能"
+  "Function": "機能設定",
+  "Variable": "変数設定",
+  "Log": "出力",
+  "Program Variables": "プログラム変数",
+  "Community Edition": "コミュニティ版",
+  "AI Tool for Everyone": "AIツール"
+}

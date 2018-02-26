@@ -34,6 +34,7 @@ namespace R8
 
         private List<Label> lineLabels = new List<Label>();
 
+        private string Program_Functions = "Program Functions";
 
         //20170817 leo: 發現有時候在 FormFunctions 拉 function 順序時，會話畫面捲動導致 function 被誤拖曳，
         //原因為 Form 在 onFocus 時會自動捲動到 [該 Form 中，前一個被選取物件] 的位置。
@@ -67,7 +68,9 @@ namespace R8
             addVariableSn(function);
             addButton("start", 0);
             */
-            this.Text = "Program Functions  0 of 0";
+            Program_Functions = R8.TranslationString(Program_Functions);
+
+            this.Text = Program_Functions + "  0 of 0";
 
             FormFunctions_SizeChanged(sender, e);
             return;
@@ -655,7 +658,7 @@ namespace R8
                 preScrollValue = this.panel2.VerticalScroll.Minimum;
             }
 
-            this.Text = "Program Functions  " + buttons.Count + " of " +FormMain.r8.getFunctionsCount();
+            this.Text = Program_Functions + "  " + buttons.Count + " of " +FormMain.r8.getFunctionsCount();
 
 
             this.panel2.VerticalScroll.Value = preScrollValue;
@@ -756,7 +759,7 @@ namespace R8
                 formMain.formVariables.showVariables(null);
                 formMain.formFunction.showFunction(null);
                 R8.clearLogBox();
-                this.Text = "Program Functions  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
+                this.Text = Program_Functions + "  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
                 return;
             }
             //20170322 end
@@ -816,7 +819,7 @@ namespace R8
                 //20170309 leo end
                 function.posY = buttons.Count;//讀出 button 後，應該要再依實際 button 位置進行 posY排序
             }
-            this.Text = "Program Functions  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
+            this.Text = Program_Functions + "  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
             //20170125 leo: 讀檔案後 show variable
             formMain.formVariables.showVariables(null);
             //20170208 leo: 讀檔案後 formFunction 清空
@@ -853,7 +856,7 @@ namespace R8
                 formMain.formVariables.showVariables(null);
                 formMain.formFunction.showFunction(null);
                 R8.clearLogBox();
-                this.Text = "Program Functions  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
+                this.Text = Program_Functions + "  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
                 return;
             }
             Function function = null;
@@ -876,7 +879,7 @@ namespace R8
                 addButton(getFunctionShowText(function), function.sn, function.enable);
                 function.posY = buttons.Count;//讀出 button 後，應該要再依實際 button 位置進行 posY排序
             }
-            this.Text = "Program Functions  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
+            this.Text = Program_Functions + "  " + buttons.Count + " of " + FormMain.r8.getFunctionsCount();
             formMain.formVariables.showVariables(null);
             formMain.formFunction.showFunction(null);
             this.Invalidate();

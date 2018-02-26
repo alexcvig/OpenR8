@@ -21,6 +21,7 @@ namespace R8
         private int labelsLocationY = 0;
         public Function function = null;
         private TextBox remarkTextBox;//20170120 leo: 加入 remark 編輯用欄位
+        private string str_Function = "Function";
 
         public List<PanelParameter> PanelParameterList = new List<PanelParameter>();
         public CheckBox checkBox = null;
@@ -43,6 +44,9 @@ namespace R8
 
         private void FormFunction_Load(object sender, EventArgs e)
         {
+            str_Function = R8.TranslationString(str_Function);
+
+            this.Text = str_Function;
         }
 
         public void showFunction(Function function) {

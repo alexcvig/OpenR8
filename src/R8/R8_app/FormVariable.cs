@@ -20,6 +20,7 @@ namespace R8
         NumericUpDown valueNumericUpDown = null;
         TextBox valueTextBox = null;
         private string preVariableType = "";
+        private string str_Variable = "Variable";
         public FormVariable()
         {
             InitializeComponent();
@@ -78,6 +79,8 @@ namespace R8
                 buttonDelete.Visible = true;
             }
 
+            str_Variable = R8.TranslationString(str_Variable);
+            this.Text = str_Variable;
         }
 
         public void focusToTextBoxName() {

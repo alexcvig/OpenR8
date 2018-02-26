@@ -91,6 +91,8 @@ namespace R8
         public static string workSpacePath = System.Windows.Forms.Application.StartupPath + "\\workspace";
         public string programFilePath = null;
         private string formMainTitle;
+        private string str_Community = "Community Edition";
+        private string str_Slogan = "AI Tool for Everyone";
         private string defaultFileName = "program.r6";//20170328 預設名稱要改小寫
 
         //20170906 leo: 依之前討論 title 改為不顯示全路徑，只顯示檔名
@@ -217,9 +219,7 @@ namespace R8
             String version = versionSB.ToString();
             versionSB.Clear();
 
-
-            formMainTitle = "OpenR8 Community Edition  -  AI Tool for Everyone  -  Version " + version;
-            this.Text = formMainTitle;
+           
 
 
             var p = System.Diagnostics.Process.GetCurrentProcess();
@@ -285,6 +285,12 @@ namespace R8
             //R7.Log("テスト");
             //R7.CloseLog();
             //}
+
+            str_Community = R8.TranslationString(str_Community);
+            str_Slogan = R8.TranslationString(str_Slogan);
+            // "OpenR8 Community Edition  -  AI Tool for Everyone  -  Version "
+            formMainTitle = "OpenR8 " + str_Community + " - " + str_Slogan + " - Version " + version;
+            this.Text = formMainTitle;
 
             //20170411 leo :從 A3 call R8 會帶 programPath 參數，要把該 program 開起來。
             string[] args = Environment.GetCommandLineArgs();
@@ -385,12 +391,38 @@ namespace R8
         }
 
         private int TranslationMenuBar() {
-            //toolStripMenuItemFile
             
+            // File
             toolStripMenuItemFile.Text = R8.TranslationString(toolStripMenuItemFile.Text);
-            openToolStripMenuItem.Text = R8.TranslationString(openToolStripMenuItem.Text);
+            // Undo
             toolStripMenuItemUndo.Text = R8.TranslationString(toolStripMenuItemUndo.Text);
+            // Redo
             toolStripMenuItemRedo.Text = R8.TranslationString(toolStripMenuItemRedo.Text);
+            // Library
+            toolStripMenuItemLibrary.Text = R8.TranslationString(toolStripMenuItemLibrary.Text);
+            // Workspace
+            toolStripMenuItemWorkSpace.Text = R8.TranslationString(toolStripMenuItemWorkSpace.Text);
+            // Release
+            toolStripMenuItemRelease.Text = R8.TranslationString(toolStripMenuItemRelease.Text);
+            // Debug
+            toolStripMenuItemDebug.Text = R8.TranslationString(toolStripMenuItemDebug.Text);
+            // About
+            toolStripMenuItemAbout.Text = R8.TranslationString(toolStripMenuItemAbout.Text);
+            // New
+            newToolStripMenuItem.Text = R8.TranslationString(newToolStripMenuItem.Text);
+            // Open
+            openToolStripMenuItem.Text = R8.TranslationString(openToolStripMenuItem.Text);
+            // Save
+            saveToolStripMenuItem1.Text = R8.TranslationString(saveToolStripMenuItem1.Text);
+            // Save As
+            saveAsToolStripMenuItem.Text = R8.TranslationString(saveAsToolStripMenuItem.Text);
+            // Export
+            exportToolStripMenuItem1.Text = R8.TranslationString(exportToolStripMenuItem1.Text);
+            // Exit
+            exitToolStripMenuItem.Text = R8.TranslationString(exitToolStripMenuItem.Text);
+            // Language
+            //languageToolStripMenuItem.Text = R8.TranslationString(languageToolStripMenuItem.Text);
+
 
             //toolStripMenuItemRedo.Text = R8.TranslationString(toolStripMenuItemRedo.Text);
             /*
@@ -3330,6 +3362,28 @@ namespace R8
             StringBuilder sb_key = new StringBuilder("language");
             StringBuilder sb_value = new StringBuilder(R7.STRING_SIZE);
             sb_value.Append("EN");
+            R8.WriteConfig(sb_key, sb_value);
+            sb_value.Clear();
+            R8.SaveConfigFile(R8.ConfigFilePath);
+            MessageBox.Show("It will effect when next time you open R8");
+        }
+
+        private void jpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb_key = new StringBuilder("language");
+            StringBuilder sb_value = new StringBuilder(R7.STRING_SIZE);
+            sb_value.Append("JP");
+            R8.WriteConfig(sb_key, sb_value);
+            sb_value.Clear();
+            R8.SaveConfigFile(R8.ConfigFilePath);
+            MessageBox.Show("It will effect when next time you open R8");
+        }
+
+        private void zhCNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb_key = new StringBuilder("language");
+            StringBuilder sb_value = new StringBuilder(R7.STRING_SIZE);
+            sb_value.Append("zh_CN");
             R8.WriteConfig(sb_key, sb_value);
             sb_value.Clear();
             R8.SaveConfigFile(R8.ConfigFilePath);

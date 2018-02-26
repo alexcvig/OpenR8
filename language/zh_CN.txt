@@ -1,0 +1,25 @@
+﻿{
+  "File": "档案", 
+  "Undo": "还原", 
+  "Redo": "反还原", 
+  "Library": "函式库", 
+  "Workspace": "工作路径",
+  "Release": "运行",
+  "Debug": "测试运行",
+  "About": "关于",
+  "New": "新增", 
+  "Open": "开启", 
+  "Save": "储存",
+  "Save As": "另存",
+  "Export": "汇出",
+  "Exit": "离开",
+  "Language": "切换语系",
+  "Program Functions": "函式",
+  "Libraries": "函式库"
+  "Function": "函式设定",
+  "Variable": "变数设定",
+  "Log": "输出",
+  "Program Variables": "程式变数",
+  "Community Edition": "社群版",
+  "AI Tool for Everyone": "所有人皆可使用的AI工具"
+}
