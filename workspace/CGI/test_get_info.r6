@@ -65,7 +65,7 @@
 <sn>8</sn>
 <name>CGI_GetString</name>
 <posY>1</posY>
-<enable>1</enable>
+<enable>0</enable>
 <remark></remark>
 <variableSn>0</variableSn>
 <variableSn>1</variableSn>
@@ -75,7 +75,7 @@
 <sn>9</sn>
 <name>CGI_GetString</name>
 <posY>2</posY>
-<enable>1</enable>
+<enable>0</enable>
 <remark></remark>
 <variableSn>0</variableSn>
 <variableSn>2</variableSn>

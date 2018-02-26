@@ -13,7 +13,7 @@
 <sn>1</sn>
 <name>CGI_GetString</name>
 <posY>1</posY>
-<enable>1</enable>
+<enable>0</enable>
 <remark></remark>
 <variableSn>0</variableSn>
 <variableSn>1</variableSn>
@@ -23,7 +23,7 @@
 <sn>2</sn>
 <name>CGI_GetString</name>
 <posY>2</posY>
-<enable>1</enable>
+<enable>0</enable>
 <remark></remark>
 <variableSn>0</variableSn>
 <variableSn>2</variableSn>
@@ -85,7 +85,7 @@
 <sn>7</sn>
 <name>CGI_GetBinary</name>
 <posY>3</posY>
-<enable>1</enable>
+<enable>0</enable>
 <remark></remark>
 <variableSn>3</variableSn>
 <variableSn>0</variableSn>
@@ -94,7 +94,7 @@
 <sn>8</sn>
 <name>File_SaveBinary</name>
 <posY>8</posY>
-<enable>1</enable>
+<enable>0</enable>
 <remark></remark>
 <variableSn>0</variableSn>
 <variableSn>3</variableSn>
