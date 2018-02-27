@@ -34,7 +34,7 @@ namespace R8
 
         private List<Label> lineLabels = new List<Label>();
 
-        private string Program_Functions = "Program Functions";
+        private string Program_Functions = "Program";
 
         //20170817 leo: 發現有時候在 FormFunctions 拉 function 順序時，會話畫面捲動導致 function 被誤拖曳，
         //原因為 Form 在 onFocus 時會自動捲動到 [該 Form 中，前一個被選取物件] 的位置。

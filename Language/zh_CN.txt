@@ -14,12 +14,22 @@
   "Export": "汇出",
   "Exit": "离开",
   "Language": "切换语系",
-  "Program Functions": "函式",
+  "Program": "程式",
   "Libraries": "函式库"
   "Function": "函式设定",
   "Variable": "变数设定",
-  "Log": "输出",
-  "Program Variables": "程式变数",
+  "Variables": "变数",
   "Community Edition": "社群版",
-  "AI Tool for Everyone": "所有人皆可使用的AI工具"
+  "AI Tool for Everyone": "人人都会使用的AI工具",
+  "Version": "版本",
+  "OpenR8 Community Edition.": "OpenR8 社群版"
+  "© 2004-2018 Open Robot Club": "© 2004-2018 开源机器人俱乐部",
+  "Website: http://www.openrobot.club": "网址: http://www.openrobot.club",
+  "Contact Email: openrobot@openrobot.club": "联络信箱: openrobot@openrobot.club",
+  "This Community Edition is only for non-commercial application.": "社群版仅供非商业用途。",
+  "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY.": "此软体按原样提供，不提供保固。",
+  "Bug Report: openrobot@openrobot.club": "错误报告: openrobot@openrobot.club",
+  "For commercial application, please contact us to purchase Commercial License.": "对于商业用途，请联系我们购买商业版权。",
+  "Export to Windows batch file": "输出到Windows批次文件",
+  "Export to Visual C++ file": "输出到Visual C++文件"
 }

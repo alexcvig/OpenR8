@@ -14,12 +14,22 @@
   "Export": "輸出する",
   "Exit": "離れる",
   "Language": "言語"
-  "Program Functions": "プログラム",
+  "Program": "プログラム",
   "Libraries": "機能"
   "Function": "機能設定",
   "Variable": "変数設定",
-  "Log": "出力",
-  "Program Variables": "プログラム変数",
+  "Variables": "変数",
   "Community Edition": "コミュニティ版",
-  "AI Tool for Everyone": "AIツール"
+  "AI Tool for Everyone": "みんなが使うAIツール",
+  "Version": "バージョン",
+  "OpenR8 Community Edition.": "OpenR8 コミュニティ版。"
+  "© 2004-2018 Open Robot Club": "© 2004-2018 オープンソースロボットクラブ",
+  "Website: http://www.openrobot.club": "ウェブサイト: http://www.openrobot.club",
+  "Contact Email: openrobot@openrobot.club": "連絡先メール: openrobot@openrobot.club",
+  "This Community Edition is only for non-commercial application.": "Community Editionは非商用での使用のみです。",
+  "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY.": "このソフトウェアは現状のまま提供され、保証は提供されません。",
+  "Bug Report: openrobot@openrobot.club": "エラー報告: openrobot@openrobot.club",
+  "For commercial application, please contact us to purchase Commercial License.": "商業目的のために、商業的な著作権を購入するために私達に連絡してください。",
+  "Export to Windows batch file": "Windowsバッチファイルへの出力",
+  "Export to Visual C++ file": "Visual C ++ファイルにエクスポートする"
 }

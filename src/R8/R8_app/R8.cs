@@ -1063,10 +1063,13 @@ namespace R8
                 {
                     jsonObj = file.Substring(start, end - start + 1);
                 }
-                else {
+                else
+                {
                     return -1;
                 }
 
+                //跳脫字元: \" 處理
+                jsonObj = jsonObj.Replace("\\\"", "*colon*");
 
                 bool isGetingKey = true;
                 string key = "";
@@ -1095,6 +1098,11 @@ namespace R8
                         else {
                             value = jsonObj.Substring(start + 1, end - start + 1 - 2);
                             jsonObj = jsonObj.Substring(end + 1);
+                            //MessageBox.Show("Get: k = " + key + ", v = " + value);
+
+                            //跳脫字元: \" 處理
+                            key = key.Replace("*colon*", "\"");
+                            value = value.Replace("*colon*", "\"");
                             languageDictionary.Add(key, value);
                             isGetingKey = !isGetingKey;
                         }

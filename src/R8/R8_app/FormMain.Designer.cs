@@ -37,10 +37,12 @@ partial class FormMain {
             this.exportBatchFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportCFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reLoadToolBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zhTWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zhCNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zhTWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemUndo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRedo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemLibrary = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,8 +53,6 @@ partial class FormMain {
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.zh_twToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.engToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.jpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zhCNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -148,6 +148,7 @@ partial class FormMain {
             this.exportToolStripMenuItem1.Name = "exportToolStripMenuItem1";
             this.exportToolStripMenuItem1.Size = new System.Drawing.Size(412, 48);
             this.exportToolStripMenuItem1.Text = "Export";
+            this.exportToolStripMenuItem1.Click += new System.EventHandler(this.exportToolStripMenuItem1_Click_1);
             // 
             // exportBatchFileToolStripMenuItem
             // 
@@ -171,13 +172,6 @@ partial class FormMain {
             this.reLoadToolBoxToolStripMenuItem.Visible = false;
             this.reLoadToolBoxToolStripMenuItem.Click += new System.EventHandler(this.reLoadToolBoxToolStripMenuItem_Click);
             // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(412, 48);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
             // languageToolStripMenuItem
             // 
             this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -189,19 +183,40 @@ partial class FormMain {
             this.languageToolStripMenuItem.Size = new System.Drawing.Size(412, 48);
             this.languageToolStripMenuItem.Text = "Language";
             // 
-            // zhTWToolStripMenuItem
-            // 
-            this.zhTWToolStripMenuItem.Name = "zhTWToolStripMenuItem";
-            this.zhTWToolStripMenuItem.Size = new System.Drawing.Size(268, 48);
-            this.zhTWToolStripMenuItem.Text = "zh_TW";
-            this.zhTWToolStripMenuItem.Click += new System.EventHandler(this.zhTWToolStripMenuItem_Click);
-            // 
             // enToolStripMenuItem
             // 
             this.enToolStripMenuItem.Name = "enToolStripMenuItem";
-            this.enToolStripMenuItem.Size = new System.Drawing.Size(268, 48);
+            this.enToolStripMenuItem.Size = new System.Drawing.Size(244, 48);
             this.enToolStripMenuItem.Text = "en";
             this.enToolStripMenuItem.Click += new System.EventHandler(this.enToolStripMenuItem_Click);
+            // 
+            // jpToolStripMenuItem
+            // 
+            this.jpToolStripMenuItem.Name = "jpToolStripMenuItem";
+            this.jpToolStripMenuItem.Size = new System.Drawing.Size(244, 48);
+            this.jpToolStripMenuItem.Text = "jp";
+            this.jpToolStripMenuItem.Click += new System.EventHandler(this.jpToolStripMenuItem_Click);
+            // 
+            // zhCNToolStripMenuItem
+            // 
+            this.zhCNToolStripMenuItem.Name = "zhCNToolStripMenuItem";
+            this.zhCNToolStripMenuItem.Size = new System.Drawing.Size(244, 48);
+            this.zhCNToolStripMenuItem.Text = "zh_CN";
+            this.zhCNToolStripMenuItem.Click += new System.EventHandler(this.zhCNToolStripMenuItem_Click);
+            // 
+            // zhTWToolStripMenuItem
+            // 
+            this.zhTWToolStripMenuItem.Name = "zhTWToolStripMenuItem";
+            this.zhTWToolStripMenuItem.Size = new System.Drawing.Size(244, 48);
+            this.zhTWToolStripMenuItem.Text = "zh_TW";
+            this.zhTWToolStripMenuItem.Click += new System.EventHandler(this.zhTWToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(412, 48);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // toolStripMenuItemUndo
             // 
@@ -272,20 +287,6 @@ partial class FormMain {
             // 
             this.engToolStripMenuItem.Name = "engToolStripMenuItem";
             this.engToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
-            // 
-            // jpToolStripMenuItem
-            // 
-            this.jpToolStripMenuItem.Name = "jpToolStripMenuItem";
-            this.jpToolStripMenuItem.Size = new System.Drawing.Size(268, 48);
-            this.jpToolStripMenuItem.Text = "jp";
-            this.jpToolStripMenuItem.Click += new System.EventHandler(this.jpToolStripMenuItem_Click);
-            // 
-            // zhCNToolStripMenuItem
-            // 
-            this.zhCNToolStripMenuItem.Name = "zhCNToolStripMenuItem";
-            this.zhCNToolStripMenuItem.Size = new System.Drawing.Size(268, 48);
-            this.zhCNToolStripMenuItem.Text = "zh_CN";
-            this.zhCNToolStripMenuItem.Click += new System.EventHandler(this.zhCNToolStripMenuItem_Click);
             // 
             // FormMain
             // 
