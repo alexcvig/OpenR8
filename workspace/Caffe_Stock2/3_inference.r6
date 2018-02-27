@@ -5,9 +5,9 @@
 <program>
 <version>0.0.0</version>
 <functionSnMax>7</functionSnMax>
-<variableSnMax>11</variableSnMax>
+<variableSnMax>13</variableSnMax>
 <functionSnCount>5</functionSnCount>
-<variableSnCount>11</variableSnCount>
+<variableSnCount>13</variableSnCount>
 <functions>
 <function>
 <sn>1</sn>
@@ -127,8 +127,8 @@
 <sn>9</sn>
 <name>InputList</name>
 <type>string</type>
-<value>71469,1,39209,0,26957,1</value>
-<remark>should 1</remark>
+<value>21,61,16,60,18,168,22,354,20,32,26,158,26,-201,23,409,28,-233</value>
+<remark>It should 1</remark>
 </variable>
 <variable>
 <sn>10</sn>
@@ -141,8 +141,22 @@
 <sn>11</sn>
 <name>InputList1</name>
 <type>string</type>
-<value>65689,0,35605,1,71469,1</value>
-<remark>should 0</remark>
+<value>11,265,21,333,15,-366,15,157,15,130,17,317,18,84,14,98,13,123</value>
+<remark>it should 0</remark>
+</variable>
+<variable>
+<sn>12</sn>
+<name>InputList2</name>
+<type>string</type>
+<value>21,233,19,-118,20,-378,20,-657,20,-490,17,6,18,373,19,-233,17,17</value>
+<remark>it should 0</remark>
+</variable>
+<variable>
+<sn>13</sn>
+<name>InputList3</name>
+<type>string</type>
+<value>20,-378,20,-657,20,-490,17,6,18,373,19,-233,17,17,17,-192,11,265</value>
+<remark>it should 1</remark>
 </variable>
 </variables>
 </program>

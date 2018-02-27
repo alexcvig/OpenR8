@@ -32,7 +32,7 @@ max_iter: 1000
 
 # snapshot intermediate results
 # snapshot: 1000
-snapshot_prefix: "snapshot"
+snapshot_prefix: "data/snapshot"
 
 type: "sgd"
 # solver mode: CPU or GPU

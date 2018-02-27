@@ -92,7 +92,7 @@
 <sn>4</sn>
 <name>CaffeModelPath</name>
 <type>string</type>
-<value>snapshot_iter_1000.caffemodel</value>
+<value>data\snapshot_iter_1000.caffemodel</value>
 <remark></remark>
 </variable>
 <variable>
