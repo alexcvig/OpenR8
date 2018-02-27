@@ -32,7 +32,7 @@ namespace R8
 
 
         private R8.PanelNoScrollOnFocus panel2;
-        private string str_Variables = "Program Variables";
+        private string str_Variables = "Variables";
 
         public FormVariables()
         {

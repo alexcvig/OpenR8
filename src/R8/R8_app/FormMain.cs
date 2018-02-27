@@ -93,6 +93,7 @@ namespace R8
         private string formMainTitle;
         private string str_Community = "Community Edition";
         private string str_Slogan = "AI Tool for Everyone";
+        private string str_Version = "Version";
         private string defaultFileName = "program.r6";//20170328 預設名稱要改小寫
 
         //20170906 leo: 依之前討論 title 改為不顯示全路徑，只顯示檔名
@@ -288,8 +289,9 @@ namespace R8
 
             str_Community = R8.TranslationString(str_Community);
             str_Slogan = R8.TranslationString(str_Slogan);
+            str_Version = R8.TranslationString(str_Version);
             // "OpenR8 Community Edition  -  AI Tool for Everyone  -  Version "
-            formMainTitle = "OpenR8 " + str_Community + " - " + str_Slogan + " - Version " + version;
+            formMainTitle = "OpenR8 " + str_Community + " - " + str_Slogan + " - " + str_Version + " " + version;
             this.Text = formMainTitle;
 
             //20170411 leo :從 A3 call R8 會帶 programPath 參數，要把該 program 開起來。
@@ -423,6 +425,13 @@ namespace R8
             // Language
             //languageToolStripMenuItem.Text = R8.TranslationString(languageToolStripMenuItem.Text);
 
+            // Export
+            string str_Export1 = "Export to Windows batch file";
+            string str_Export2 = "Export to Visual C++ file";
+            str_Export1 = R8.TranslationString(str_Export1);
+            str_Export2 = R8.TranslationString(str_Export2);
+            exportBatchFileToolStripMenuItem.Text = str_Export1;
+            exportCFileToolStripMenuItem.Text = str_Export2;
 
             //toolStripMenuItemRedo.Text = R8.TranslationString(toolStripMenuItemRedo.Text);
             /*
@@ -733,6 +742,7 @@ namespace R8
             formPreviewImage.Show();
             */
 
+            
             if (formLog != null)
             {
                 formLog.Close();
@@ -741,6 +751,9 @@ namespace R8
             formLog.MdiParent = this;
             formLog.Location = new Point(formVariable.Location.X, formVariable.Location.Y + formVariable.Height + formDistance);
             formLog.Show();
+            formLog.Visible = false;
+
+
 
             if (formVariables != null)
             {
@@ -3388,6 +3401,17 @@ namespace R8
             sb_value.Clear();
             R8.SaveConfigFile(R8.ConfigFilePath);
             MessageBox.Show("It will effect when next time you open R8");
+        }
+
+        private void exportToolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {/*
+            string str_Export1 = "Export to Windows batch file";
+            string str_Export2 = "Export to Visual C++ file";
+            str_Export1 = R8.TranslationString(str_Export1);
+            str_Export2 = R8.TranslationString(str_Export2);
+            exportBatchFileToolStripMenuItem.Text = str_Export1;
+            exportCFileToolStripMenuItem.Text = str_Export2;
+            */
         }
 
         /*
