@@ -4,7 +4,7 @@
   "Redo": "やり直し", 
   "Library": "としょうかん", 
   "Workspace": "作業経路",
-  "Release": "リリース",
+  "Run": "リリース",
   "Debug": "デバッグ",
   "About": "について",
   "New": "追加された", 

@@ -46,7 +46,7 @@ partial class FormMain {
             this.toolStripMenuItemUndo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRedo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemLibrary = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemRelease = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRun = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemWorkSpace = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripWorkSpaceTextBox = new System.Windows.Forms.ToolStripTextBox();
@@ -66,7 +66,7 @@ partial class FormMain {
             this.toolStripMenuItemUndo,
             this.toolStripMenuItemRedo,
             this.toolStripMenuItemLibrary,
-            this.toolStripMenuItemRelease,
+            this.toolStripMenuItemRun,
             this.toolStripMenuItemDebug,
             this.toolStripMenuItemWorkSpace,
             this.toolStripWorkSpaceTextBox,
@@ -242,13 +242,13 @@ partial class FormMain {
             this.toolStripMenuItemLibrary.Text = "Library";
             this.toolStripMenuItemLibrary.Click += new System.EventHandler(this.toolStripMenuItemLibrary_Click);
             // 
-            // toolStripMenuItemRelease
+            // toolStripMenuItemRun
             // 
-            this.toolStripMenuItemRelease.Name = "toolStripMenuItemRelease";
-            this.toolStripMenuItemRelease.Size = new System.Drawing.Size(171, 48);
-            this.toolStripMenuItemRelease.Text = "Release";
-            this.toolStripMenuItemRelease.ToolTipText = "Run this program in release mode.";
-            this.toolStripMenuItemRelease.Click += new System.EventHandler(this.toolStripMenuItemRelease_Click);
+            this.toolStripMenuItemRun.Name = "toolStripMenuItemRun";
+            this.toolStripMenuItemRun.Size = new System.Drawing.Size(171, 48);
+            this.toolStripMenuItemRun.Text = "Run";
+            this.toolStripMenuItemRun.ToolTipText = "Run this program in release mode.";
+            this.toolStripMenuItemRun.Click += new System.EventHandler(this.toolStripMenuItemRun_Click);
             // 
             // toolStripMenuItemDebug
             // 
@@ -334,7 +334,7 @@ partial class FormMain {
         private System.Windows.Forms.ToolStripMenuItem reLoadToolBoxToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRelease;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRun;
         private System.Windows.Forms.ToolStripMenuItem sortAndSaveAsToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUndo;
         public System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRedo;

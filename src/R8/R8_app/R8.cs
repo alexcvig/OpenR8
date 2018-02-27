@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 
 namespace R8
 { 

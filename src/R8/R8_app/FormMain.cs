@@ -257,12 +257,14 @@ namespace R8
             //MessageBox.Show("R8.InitLanguage = " + res);
             TranslationMenuBar();
             
+            /*
             if (false)
             {   //test
                 string strValue;
                 strValue = R8.TranslationString("File");
                 MessageBox.Show("get Value: " + strValue);
             }
+            */
 
             loadLibraryFunctions();
 
@@ -405,7 +407,7 @@ namespace R8
             // Workspace
             toolStripMenuItemWorkSpace.Text = R8.TranslationString(toolStripMenuItemWorkSpace.Text);
             // Release
-            toolStripMenuItemRelease.Text = R8.TranslationString(toolStripMenuItemRelease.Text);
+            toolStripMenuItemRun.Text = R8.TranslationString(toolStripMenuItemRun.Text);
             // Debug
             toolStripMenuItemDebug.Text = R8.TranslationString(toolStripMenuItemDebug.Text);
             // About
@@ -2089,7 +2091,7 @@ namespace R8
 
         }
 
-        private void toolStripMenuItemRelease_Click(object sender, EventArgs e)
+        private void toolStripMenuItemRun_Click(object sender, EventArgs e)
         {
             runR6UseExe_Click(sender, e, true);
         }
@@ -2104,13 +2106,13 @@ namespace R8
 
             this.Invoke((MethodInvoker)delegate
             {
-                //toolStripMenuItemRelease.Enabled = true;
+                //toolStripMenuItemRun.Enabled = true;
                 //toolStripMenuItemDebug.Enabled = true;
             });
 
         }
 
-        private void backup_toolStripMenuItemRelease_Click(object sender, EventArgs e)
+        private void backup_toolStripMenuItemRun_Click(object sender, EventArgs e)
         {
             if (programFilePath == null)
             {
@@ -2128,7 +2130,7 @@ namespace R8
             if (programFilePath != null)
             {
                 //20170330 上方的按鈕在按下 Run 及 Debug 之後，請 disable 。Run 及 Debug 完畢之後，才 Enable 。
-                toolStripMenuItemRelease.Enabled = false;
+                toolStripMenuItemRun.Enabled = false;
                 //debugToolStripMenuItem.Enabled = false;
                 StringBuilder workSpacePathBuffer = new StringBuilder(workSpacePath + "\\", R7.STRING_SIZE);
                 int r7Sn = R7.New();
@@ -2157,7 +2159,7 @@ namespace R8
                 //}
                 res = R7.Release(r7Sn);
                 workSpacePathBuffer.Clear();
-                toolStripMenuItemRelease.Enabled = true;
+                toolStripMenuItemRun.Enabled = true;
                 //debugToolStripMenuItem.Enabled = true;
             }
 
