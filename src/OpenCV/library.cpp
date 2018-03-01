@@ -94,16 +94,13 @@ static int OpenCV_VideoCapture_Open(int r7Sn, int functionSn) {
 
 	OpenCV_t *videoCapturePtr = ((OpenCV_t*)variableObject);
 
-	res = R7_GetVariableObject(r7Sn, functionSn, 2, &variableObject);
-	if (res <= 0) {
-		R7_Printf(r7Sn, "ERROR! R7_GetVariableObject = %d", res);
-		return -3;
+	int deviceID = 0;
+	res = R7_GetVariableInt(r7Sn, functionSn, 2, &deviceID);
+	if (res > 0) {
+		videoCapturePtr->deviceNum = deviceID;
 	}
 
-	int deviceID = videoCapturePtr->deviceNum;
-	int apiID = videoCapturePtr->apiID;
-
-	videoCapturePtr->videoCapture->open(deviceID + apiID);
+	videoCapturePtr->videoCapture->open(videoCapturePtr->deviceNum + videoCapturePtr->apiID);
 	if (!videoCapturePtr->videoCapture->isOpened()) {
 		R7_Printf(r7Sn, "ERROR! Unable to open the Camera!");
 		return -4;
