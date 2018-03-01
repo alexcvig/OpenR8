@@ -8,4 +8,4 @@ This Community Edition is only for non-commercial applications.
 
 For commercial applications, please contact us to purchase Professional Edition License or Enterprise Edition License.
 Email: openrobot@openrobot.club
-Website: http://www.openrobot.club
+Website: https://www.openrobot.club
