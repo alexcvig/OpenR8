@@ -6,7 +6,7 @@ IDE software for AI algorithms.
 
 Implement AI algorithms without coding.
     
-Support for Windows 7 SP1 64 bit or higher.
+Support for Windows 7 SP1 64 bit or higher. Windows 10 64 bit or higher is recommended.
 
 Support for Intel Core i5 with AVX2 instruction set or higher.
     
