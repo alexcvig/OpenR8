@@ -1,6 +1,6 @@
 # OpenR8 Community Edition   
  
-AI Software for Everyone
+AI Tool for Everyone
 
 IDE software for AI algorithms.
 
@@ -18,14 +18,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	
 For commercial applications, please contact us to purchase Professional Edition License or Enterprise Edition License.  
 Contact Email: openrobot@openrobot.club  
-Website: http://www.openrobot.club  
+Website: https://www.openrobot.club  
 
 To cite OpenR8 in publications, please use:  
-Open Robot Club (2017). OpenR8: AI Software for Everyone. Open Robot Club, Taipei, Taiwan. URL: https://www.openrobot.club/.
+Open Robot Club (2017). OpenR8: AI Tool for Everyone. Open Robot Club, Taipei, Taiwan. URL: https://www.openrobot.club/.
 
 A BibTeX entry for LaTeX users is  
   @Manual{,  
-    title = {OpenR8: AI Software for Everyone.},  
+    title = {OpenR8: AI Tool for Everyone.},  
     author = {{Open Robot Club}},  
     organization = {Open Robot Club},  
     address = {Taipei, Taiwan},  
