@@ -68,7 +68,7 @@
 <sn>2</sn>
 <name>InputFile</name>
 <type>string</type>
-<value>data\stock2.txt</value>
+<value>data\stock2_all.txt</value>
 <remark></remark>
 </variable>
 <variable>
@@ -82,7 +82,7 @@
 <sn>4</sn>
 <name>InputFile1</name>
 <type>string</type>
-<value>data\stock2_test.txt</value>
+<value>data\stock2_all.txt</value>
 <remark></remark>
 </variable>
 <variable>
